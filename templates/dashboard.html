@@ -1,13 +1,25 @@
 {% extends 'base.html' %}
 
-{% block head %}{% endblock %}
+{% block head %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/dashboard.css') }}"
+{% endblock %}
 
 {% block body %}
     <h1>Hello {{ handle }}</h1>
-    {% for tag in data %}
-        <h3>{{ tag }}</h3>
-        {% for problem in data[tag] %}
-            <h6> {{ problem }} </h6>
+    <div class="contests_table">
+        {% for contest in contests %}
+            <div class="contest">
+                <h3>{{ contest.contestName }}</h3>
+                <div class="problems">
+                    <table>
+                        <tr>
+                            {% for problem in contest_problems[loop.index0] %}
+                                <td class="problem_index">{{ problem.index }}</td>
+                            {% endfor %}
+                        </tr>
+                    </table>
+                </div>
+            </div>
         {% endfor %}
-    {% endfor %}
+    </div>
 {% endblock %}

@@ -4,7 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a04fb70e-abd0-438e-87b3-2d75c8554247" name="Changes" comment="Track unique solved problems">
+    <list default="true" id="a04fb70e-abd0-438e-87b3-2d75c8554247" name="Changes" comment="Track problems sorted under each tag">
+      <change afterPath="$PROJECT_DIR$/static/css/dashboard.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/codeforces_api.py" beforeDir="false" afterPath="$PROJECT_DIR$/codeforces_api.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/routes.py" beforeDir="false" afterPath="$PROJECT_DIR$/routes.py" afterDir="false" />
@@ -21,6 +22,7 @@
         <option value="Flask Main" />
         <option value="Python Script" />
         <option value="HTML File" />
+        <option value="CSS File" />
       </list>
     </option>
   </component>
@@ -38,9 +40,9 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "associatedIndex": 5
-}]]></component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 5
+}</component>
   <component name="ProjectId" id="2zH5BJxmKvd3gBINPf1mEBrIs8L" />
   <component name="ProjectLevelVcsManager">
     <ConfirmationsSetting value="2" id="Add" />
@@ -57,6 +59,8 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
     "git-widget-placeholder": "master",
+    "ignore.virus.scanning.warn.message": "true",
+    "list.type.of.created.stylesheet": "CSS",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -76,7 +80,7 @@
       <option name="PARENT_ENVS" value="true" />
       <option name="SDK_HOME" value="" />
       <option name="SDK_NAME" value="Python 3.13 (CodeforcesProgressTracker)" />
-      <option name="WORKING_DIRECTORY" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
       <option name="IS_MODULE_SDK" value="false" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
@@ -100,7 +104,9 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1751375020882</updated>
-      <workItem from="1751375021912" duration="10063000" />
+      <workItem from="1751375021912" duration="11212000" />
+      <workItem from="1751393220005" duration="1652000" />
+      <workItem from="1751405928986" duration="4771000" />
     </task>
     <task id="LOCAL-00001" summary="Basic Initial Setup of the Application">
       <option name="closed" value="true" />
@@ -142,7 +148,15 @@
       <option name="project" value="LOCAL" />
       <updated>1751383479154</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="Track problems sorted under each tag">
+      <option name="closed" value="true" />
+      <created>1751385522051</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1751385522051</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -165,9 +179,10 @@
     <MESSAGE value="Added the Base Html and configured the database" />
     <MESSAGE value="Added the dashboard that displays the information of the user" />
     <MESSAGE value="Track unique solved problems" />
-    <option name="LAST_COMMIT_MESSAGE" value="Track unique solved problems" />
+    <MESSAGE value="Track problems sorted under each tag" />
+    <option name="LAST_COMMIT_MESSAGE" value="Track problems sorted under each tag" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/CodeforcesProgressTracker$CodeforcesProgressTracker.coverage" NAME="CodeforcesProgressTracker Coverage Results" MODIFIED="1751382373191" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
+    <SUITE FILE_PATH="coverage/CodeforcesProgressTracker$CodeforcesProgressTracker.coverage" NAME="CodeforcesProgressTracker Coverage Results" MODIFIED="1751410436702" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
 </project>

@@ -17,4 +17,9 @@ def setup_routes(app, db):
     def dashboard(handle):
         #get user info and display it
         data = get_problem_tags(handle)
-        return render_template('dashboard.html', handle=handle, data=data)
+        contests = get_user_contests(handle)
+        contests.reverse()
+        contest_problems = []
+        for contest in contests:
+            contest_problems.append(get_contest_problems(contest['contestId']))
+        return render_template('dashboard.html', handle=handle, data=data, contests=contests, contest_problems=contest_problems)

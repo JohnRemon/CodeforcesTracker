@@ -1,21 +1,15 @@
 from collections import defaultdict
 import requests
+import json
 
-def get_user_info(handle):
+def get_user_submissions(handle):
     url = f"https://codeforces.com/api/user.status?handle={handle}"
     response = requests.get(url)
-
-    if response.status_code != 200:
-        return []
-
     data = response.json()
-    if data['status'] != 'OK':
-        return {"status": data['status']}
-
     return data
 
 def get_problem_info(handle):
-    data = get_user_info(handle)
+    data = get_user_submissions(handle)
     problems = []
     seen_problems = set()
     for item in data['result']:
@@ -34,3 +28,15 @@ def get_problem_tags(handle):
         for tag in problem['tags']:
             tag_map[tag].add(problem['name'])
     return tag_map
+
+def get_user_contests(handle):
+    url = f"https://codeforces.com/api/user.rating?handle={handle}"
+    response = requests.get(url)
+    data = response.json()
+    return data['result']
+
+def get_contest_problems(contest_id):
+    url = f"https://codeforces.com/api/contest.standings?contestId={contest_id}&from=1&count=1"
+    response = requests.get(url)
+    data = response.json()
+    return data['result']['problems']
