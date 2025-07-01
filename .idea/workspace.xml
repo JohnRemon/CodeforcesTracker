@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a04fb70e-abd0-438e-87b3-2d75c8554247" name="Changes" comment="Added the dashboard that displays the information of the user">
+    <list default="true" id="a04fb70e-abd0-438e-87b3-2d75c8554247" name="Changes" comment="Track unique solved problems">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/codeforces_api.py" beforeDir="false" afterPath="$PROJECT_DIR$/codeforces_api.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/routes.py" beforeDir="false" afterPath="$PROJECT_DIR$/routes.py" afterDir="false" />
@@ -100,7 +100,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1751375020882</updated>
-      <workItem from="1751375021912" duration="8103000" />
+      <workItem from="1751375021912" duration="10063000" />
     </task>
     <task id="LOCAL-00001" summary="Basic Initial Setup of the Application">
       <option name="closed" value="true" />
@@ -134,7 +134,15 @@
       <option name="project" value="LOCAL" />
       <updated>1751381867181</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="Track unique solved problems">
+      <option name="closed" value="true" />
+      <created>1751383479154</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1751383479154</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -156,7 +164,8 @@
     <MESSAGE value="Added requirements.txt" />
     <MESSAGE value="Added the Base Html and configured the database" />
     <MESSAGE value="Added the dashboard that displays the information of the user" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added the dashboard that displays the information of the user" />
+    <MESSAGE value="Track unique solved problems" />
+    <option name="LAST_COMMIT_MESSAGE" value="Track unique solved problems" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/CodeforcesProgressTracker$CodeforcesProgressTracker.coverage" NAME="CodeforcesProgressTracker Coverage Results" MODIFIED="1751382373191" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />

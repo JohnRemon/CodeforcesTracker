@@ -1,5 +1,5 @@
 from flask import render_template, request, jsonify, redirect, url_for
-from codeforces_api import get_user_info, get_problem_info
+from codeforces_api import *
 
 def setup_routes(app, db):
     @app.route('/', methods=['GET', 'POST'])
@@ -16,6 +16,5 @@ def setup_routes(app, db):
     @app.route('/dashboard/<handle>', methods=['GET', 'POST'])
     def dashboard(handle):
         #get user info and display it
-        data = get_problem_info(handle)
-
+        data = get_problem_tags(handle)
         return render_template('dashboard.html', handle=handle, data=data)

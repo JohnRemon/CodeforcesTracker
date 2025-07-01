@@ -1,5 +1,5 @@
+from collections import defaultdict
 import requests
-import json
 
 def get_user_info(handle):
     url = f"https://codeforces.com/api/user.status?handle={handle}"
@@ -16,14 +16,21 @@ def get_user_info(handle):
 
 def get_problem_info(handle):
     data = get_user_info(handle)
-    print(type(data))
-    print(json.dumps(data, indent=2))
-    problem_names = []
-    seen_problem_names = set()
+    problems = []
+    seen_problems = set()
     for item in data['result']:
         if item['verdict'] == 'OK':
-            problem_name = item['problem']['name']
-            if problem_name not in seen_problem_names:
-                problem_names.append(problem_name)
-                seen_problem_names.add(problem_name)
-    return problem_names
+            problem = item['problem']
+            problem_id = item['id']
+            if problem_id not in seen_problems:
+                problems.append(problem)
+                seen_problems.add(problem_id)
+    return problems
+
+def get_problem_tags(handle):
+    problems = get_problem_info(handle)
+    tag_map = defaultdict(set)
+    for problem in problems:
+        for tag in problem['tags']:
+            tag_map[tag].add(problem['name'])
+    return tag_map

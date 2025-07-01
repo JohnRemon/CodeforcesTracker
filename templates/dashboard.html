@@ -4,7 +4,10 @@
 
 {% block body %}
     <h1>Hello {{ handle }}</h1>
-    {% for item in data %}
-        <h2>{{ item }}</h2>
+    {% for tag in data %}
+        <h3>{{ tag }}</h3>
+        {% for problem in data[tag] %}
+            <h6> {{ problem }} </h6>
+        {% endfor %}
     {% endfor %}
 {% endblock %}
