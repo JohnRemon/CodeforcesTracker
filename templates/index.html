@@ -4,4 +4,10 @@
 
 {% block body %}
     <h1>Codeforces Progress Tracker</h1>
+    <div class="container">
+        <form method="POST" action="/">
+                <input type="text" name="handle" placeholder="Enter Your Handle" required>
+                <button type="submit">Submit</button>
+        </form>
+    </div>
 {% endblock %}

@@ -4,13 +4,15 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a04fb70e-abd0-438e-87b3-2d75c8554247" name="Changes" comment="Added requirements.txt">
-      <change afterPath="$PROJECT_DIR$/codeforces_api.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/base.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/index.html" afterDir="false" />
+    <list default="true" id="a04fb70e-abd0-438e-87b3-2d75c8554247" name="Changes" comment="Added the Base Html and configured the database">
+      <change afterPath="$PROJECT_DIR$/models.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/routes.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/dashboard.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/app.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/codeforces_api.py" beforeDir="false" afterPath="$PROJECT_DIR$/codeforces_api.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/index.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -69,6 +71,7 @@
 }]]></component>
   <component name="RunManager">
     <configuration name="CodeforcesProgressTracker" type="Python.FlaskServer">
+      <option name="flaskDebug" value="true" />
       <module name="CodeforcesProgressTracker" />
       <option name="target" value="$PROJECT_DIR$/app.py" />
       <option name="targetType" value="PATH" />
@@ -76,6 +79,7 @@
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
       <option name="SDK_HOME" value="" />
+      <option name="SDK_NAME" value="Python 3.13 (CodeforcesProgressTracker)" />
       <option name="WORKING_DIRECTORY" value="" />
       <option name="IS_MODULE_SDK" value="false" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
@@ -100,7 +104,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1751375020882</updated>
-      <workItem from="1751375021912" duration="2100000" />
+      <workItem from="1751375021912" duration="6195000" />
     </task>
     <task id="LOCAL-00001" summary="Basic Initial Setup of the Application">
       <option name="closed" value="true" />
@@ -118,7 +122,15 @@
       <option name="project" value="LOCAL" />
       <updated>1751375414979</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="Added the Base Html and configured the database">
+      <option name="closed" value="true" />
+      <created>1751377713404</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1751377713404</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -138,9 +150,10 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Basic Initial Setup of the Application" />
     <MESSAGE value="Added requirements.txt" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added requirements.txt" />
+    <MESSAGE value="Added the Base Html and configured the database" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added the Base Html and configured the database" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/CodeforcesProgressTracker$CodeforcesProgressTracker.coverage" NAME="CodeforcesProgressTracker Coverage Results" MODIFIED="1751375800786" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
+    <SUITE FILE_PATH="coverage/CodeforcesProgressTracker$CodeforcesProgressTracker.coverage" NAME="CodeforcesProgressTracker Coverage Results" MODIFIED="1751380771672" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
   </component>
 </project>
