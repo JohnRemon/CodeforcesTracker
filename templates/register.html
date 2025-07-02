@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block head %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/register.css') }}">
+{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <h1>Codeforces Progress Tracker</h1>
+        <form method="POST" action="/register">
+            <input type="text" name="handle" placeholder="Enter Your Handle" required>
+            <input type="email" name="email" placeholder="Enter Your Email" required>
+            <input type="password" name="password" placeholder="Enter Your Password" required>
+            <button type="submit">Register</button>
+        </form>
+        <p class="error_message">
+            {% if error_message %}
+                {{ error_message }}
+            {% endif %}
+        </p>
+        <p>Already have an account? <a href="/login">Login</a></p>
+    </div>
+{% endblock %}

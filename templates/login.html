@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block head %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/login.css') }}">
+{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <h1>Codeforces Progress Tracker</h1>
+        <form method="POST" action="/login">
+            <input type="text" name="email" placeholder="Enter Your Email" required>
+            <input type="password" name="password" placeholder="Enter Your Password" required>
+            <button type="submit">Submit</button>
+        </form>
+    </div>
+{% endblock %}

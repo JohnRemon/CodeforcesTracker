@@ -2,6 +2,12 @@ from collections import defaultdict
 import requests
 import json
 
+def check_handle(handle):
+    url = f"https://codeforces.com/api/user.info?handles={handle}"
+    response = requests.get(url)
+    data = response.json()
+    return data['status'] == 'OK'
+
 def get_user_submissions(handle):
     url = f"https://codeforces.com/api/user.status?handle={handle}"
     response = requests.get(url)

@@ -1,10 +1,14 @@
-from flask import Flask, render_template
-from flask_sqlalchemy import SQLAlchemy
+from flask import Flask
 from routes import setup_routes
+from models import *
 app = Flask(__name__)
 
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
-db = SQLAlchemy(app)
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+db.init_app(app)
+
+with app.app_context():
+    db.create_all()
 
 setup_routes(app, db)
 
