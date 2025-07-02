@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 
 {% block head %}
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/dashboard.css') }}"
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/dashboard.css') }}">
 {% endblock %}
 
 {% block body %}
@@ -14,7 +14,19 @@
                     <table>
                         <tr>
                             {% for problem in contest_problems[loop.index0] %}
-                                <td class="problem_index">{{ problem.index }}</td>
+                                {% if problem.index in solved_problems[contest.contestId] %}
+                                    <td class="problem_index_solved">
+                                        <a href="https://codeforces.com/contest/{{ contest.contestId }}/problem/{{ problem.index }}" target="_blank">{{ problem.index }}</a>
+                                    </td>
+                                {% elif problem.index in unsolved_problems[contest.contestId] %}
+                                    <td class="problem_index_unsolved">
+                                        <a href="https://codeforces.com/contest/{{ contest.contestId }}/problem/{{ problem.index }}" target="_blank">{{ problem.index }}</a>
+                                    </td>
+                                {% else %}
+                                    <td class="problem_index">
+                                        <a href="https://codeforces.com/contest/{{ contest.contestId }}/problem/{{ problem.index }}" target="_blank">{{ problem.index }}</a>
+                                    </td>
+                                {% endif %}
                             {% endfor %}
                         </tr>
                     </table>

@@ -40,3 +40,35 @@ def get_contest_problems(contest_id):
     response = requests.get(url)
     data = response.json()
     return data['result']['problems']
+
+def get_solved_contest_problems(handle):
+    submissions = get_user_submissions(handle)['result']
+    contests = get_user_contests(handle)
+    solved_problems = defaultdict(set)
+    for submission in submissions:
+        if submission['verdict'] == 'OK':
+            contest_id = submission['contestId']
+            problem = submission['problem']
+            solved_problems[contest_id].add(problem['index'])
+
+    contest_solved = defaultdict(set)
+    for contest in contests:
+        contest_id = contest['contestId']
+        contest_solved[contest_id] = solved_problems[contest_id]
+    return contest_solved
+
+def get_unsolved_contest_problems(handle):
+    submissions = get_user_submissions(handle)['result']
+    contests = get_user_contests(handle)
+    unsolved_problems = defaultdict(set)
+    for submission in submissions:
+        if submission['verdict'] != 'OK':
+            contest_id = submission['contestId']
+            problem = submission['problem']
+            unsolved_problems[contest_id].add(problem['index'])
+
+    contest_unsolved = defaultdict(set)
+    for contest in contests:
+        contest_id = contest['contestId']
+        contest_unsolved[contest_id] = unsolved_problems[contest_id]
+    return contest_unsolved

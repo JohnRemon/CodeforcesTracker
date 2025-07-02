@@ -19,7 +19,18 @@ def setup_routes(app, db):
         data = get_problem_tags(handle)
         contests = get_user_contests(handle)
         contests.reverse()
+        contests = contests[:5]
         contest_problems = []
         for contest in contests:
             contest_problems.append(get_contest_problems(contest['contestId']))
-        return render_template('dashboard.html', handle=handle, data=data, contests=contests, contest_problems=contest_problems)
+        solved_problems = get_solved_contest_problems(handle)
+        unsolved_problems = get_unsolved_contest_problems(handle)
+        return render_template(
+            'dashboard.html',
+            handle=handle,
+            data=data,
+            contests=contests,
+            contest_problems=contest_problems,
+            solved_problems=solved_problems,
+            unsolved_problems=unsolved_problems
+        )
