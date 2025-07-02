@@ -6,32 +6,56 @@
 
 {% block body %}
     <h1>Hello {{ handle }}</h1>
-    <div class="contests_table">
-        {% for contest in contests %}
-            <div class="contest">
-                <h3>{{ contest.contestName }}</h3>
-                <div class="problems">
-                    <table>
-                        <tr>
-                            {% for problem in contest_problems[loop.index0] %}
-                                {% if problem.index in solved_problems[contest.contestId] %}
-                                    <td class="problem_index_solved">
-                                        <a href="https://codeforces.com/contest/{{ contest.contestId }}/problem/{{ problem.index }}" target="_blank">{{ problem.index }}</a>
-                                    </td>
-                                {% elif problem.index in unsolved_problems[contest.contestId] %}
-                                    <td class="problem_index_unsolved">
-                                        <a href="https://codeforces.com/contest/{{ contest.contestId }}/problem/{{ problem.index }}" target="_blank">{{ problem.index }}</a>
-                                    </td>
-                                {% else %}
-                                    <td class="problem_index">
-                                        <a href="https://codeforces.com/contest/{{ contest.contestId }}/problem/{{ problem.index }}" target="_blank">{{ problem.index }}</a>
-                                    </td>
-                                {% endif %}
-                            {% endfor %}
-                        </tr>
-                    </table>
+    <div class="container">
+        <div class="contests_table">
+            <h2>Recent Contests</h2>
+            {% for contest in contests %}
+                <div class="contest">
+                    <h3>{{ contest.contestName }}</h3>
+                    <div class="problems">
+                        <table>
+                            <tr>
+                                {% for problem in contest_problems[loop.index0] %}
+                                    {% if problem.index in solved_problems[contest.contestId] %}
+                                        <td class="problem_index_solved">
+                                            <a href="https://codeforces.com/contest/{{ contest.contestId }}/problem/{{ problem.index }}" target="_blank">{{ problem.index }}</a>
+                                        </td>
+                                    {% elif problem.index in unsolved_problems[contest.contestId] %}
+                                        <td class="problem_index_unsolved">
+                                            <a href="https://codeforces.com/contest/{{ contest.contestId }}/problem/{{ problem.index }}" target="_blank">{{ problem.index }}</a>
+                                        </td>
+                                    {% else %}
+                                        <td class="problem_index">
+                                            <a href="https://codeforces.com/contest/{{ contest.contestId }}/problem/{{ problem.index }}" target="_blank">{{ problem.index }}</a>
+                                        </td>
+                                    {% endif %}
+                                {% endfor %}
+                            </tr>
+                        </table>
+                    </div>
                 </div>
+            {% endfor %}
+        </div>
+        <div class="recent_problems">
+                <h2>Recent Problems</h2>
+                {% for sub in submissions %}
+                    <div class="submission">
+                        <table class="problem_table">
+                            <tr>
+                                <td>{{ sub.index }}</td>
+                                <td>
+                                    <a href="https://codeforces.com/problemset/problem/{{ sub.contestId }}/{{ sub.index }}" target="_blank">{{ sub.name }}</a>
+                                </td>
+                                <td>{{ sub.rating }}</td>
+                                <td>
+                                    {% for tag in sub.tags %}
+                                        <span class="tag">{{ tag }}</span>
+                                    {% endfor %}
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                {% endfor %}
             </div>
-        {% endfor %}
     </div>
 {% endblock %}

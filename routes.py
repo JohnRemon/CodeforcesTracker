@@ -17,9 +17,9 @@ def setup_routes(app, db):
     def dashboard(handle):
         #get user info and display it
         data = get_problem_tags(handle)
-        contests = get_user_contests(handle)
+        submissions = get_problem_info(handle)[:8]
+        contests = get_user_contests(handle)[:5]
         contests.reverse()
-        contests = contests[:5]
         contest_problems = []
         for contest in contests:
             contest_problems.append(get_contest_problems(contest['contestId']))
@@ -32,5 +32,6 @@ def setup_routes(app, db):
             contests=contests,
             contest_problems=contest_problems,
             solved_problems=solved_problems,
-            unsolved_problems=unsolved_problems
+            unsolved_problems=unsolved_problems,
+            submissions=submissions
         )

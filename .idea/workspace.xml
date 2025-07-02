@@ -4,9 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a04fb70e-abd0-438e-87b3-2d75c8554247" name="Changes" comment="Able to display all contests the user participated in and their problems">
+    <list default="true" id="a04fb70e-abd0-438e-87b3-2d75c8554247" name="Changes" comment="Able to display the questions the user answered and the questions he was not able to answer and provided links to the problems">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/codeforces_api.py" beforeDir="false" afterPath="$PROJECT_DIR$/codeforces_api.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/routes.py" beforeDir="false" afterPath="$PROJECT_DIR$/routes.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/static/css/dashboard.css" beforeDir="false" afterPath="$PROJECT_DIR$/static/css/dashboard.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/dashboard.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/dashboard.html" afterDir="false" />
@@ -113,7 +112,7 @@
       <workItem from="1751393220005" duration="1652000" />
       <workItem from="1751405928986" duration="5070000" />
       <workItem from="1751457008132" duration="1229000" />
-      <workItem from="1751458268118" duration="1857000" />
+      <workItem from="1751458268118" duration="6733000" />
     </task>
     <task id="LOCAL-00001" summary="Basic Initial Setup of the Application">
       <option name="closed" value="true" />
@@ -171,7 +170,15 @@
       <option name="project" value="LOCAL" />
       <updated>1751410989998</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="Able to display the questions the user answered and the questions he was not able to answer and provided links to the problems">
+      <option name="closed" value="true" />
+      <created>1751460208659</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1751460208659</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -196,7 +203,8 @@
     <MESSAGE value="Track unique solved problems" />
     <MESSAGE value="Track problems sorted under each tag" />
     <MESSAGE value="Able to display all contests the user participated in and their problems" />
-    <option name="LAST_COMMIT_MESSAGE" value="Able to display all contests the user participated in and their problems" />
+    <MESSAGE value="Able to display the questions the user answered and the questions he was not able to answer and provided links to the problems" />
+    <option name="LAST_COMMIT_MESSAGE" value="Able to display the questions the user answered and the questions he was not able to answer and provided links to the problems" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/CodeforcesProgressTracker$CodeforcesProgressTracker.coverage" NAME="CodeforcesProgressTracker Coverage Results" MODIFIED="1751458315429" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />

@@ -1,4 +1,11 @@
+.container{
+    display: flex;
+    flex-direction: row;
+}
 .contests_table{
+    margin: 20px;
+}
+.recent_problems{
     margin: 20px;
 }
 .problems{
@@ -22,4 +29,8 @@
 a {
     text-decoration: none;
     color: black;
+}
+
+.tag{
+    background-color: lightgray;
 }
