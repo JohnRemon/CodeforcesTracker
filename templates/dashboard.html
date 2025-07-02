@@ -5,8 +5,15 @@
 {% endblock %}
 
 {% block body %}
-    <h1>Hello {{ handle }}</h1>
     <div class="container">
+        <div class="user_info">
+            <h2>Welcome, {{ handle }}!</h2>
+            <img src="{{ user_info.avatar }}" alt="Avatar">
+            <h4 class="user_info_description">Rating: {{ user_info.current_rating }}</h4>
+            <h4 class="user_info_description">Rank: {{ user_info.current_rank }}</h4>
+            <h4 class="user_info_description">Max Rating: {{ user_info.max_rating }}</h4>
+            <h4 class="user_info_description">Max Rank: {{ user_info.max_rank }}</h4>
+        </div>
         <div class="contests_table">
             <h2>Recent Contests</h2>
             {% for contest in contests %}
@@ -42,12 +49,12 @@
                     <div class="submission">
                         <table class="problem_table">
                             <tr>
-                                <td>{{ sub.index }}</td>
-                                <td>
-                                    <a href="https://codeforces.com/problemset/problem/{{ sub.contestId }}/{{ sub.index }}" target="_blank">{{ sub.name }}</a>
+                                <td class="problem_info"><h4>{{ sub.index }}</h4></td>
+                                <td class="problem_info">
+                                    <h4><a href="https://codeforces.com/problemset/problem/{{ sub.contestId }}/{{ sub.index }}" target="_blank">{{ sub.name }}</a></h4>
                                 </td>
-                                <td>{{ sub.rating }}</td>
-                                <td>
+                                <td class="problem_info"><h4>{{ sub.rating }}</h4></td>
+                                <td class="problem_info">
                                     {% for tag in sub.tags %}
                                         <span class="tag">{{ tag }}</span>
                                     {% endfor %}

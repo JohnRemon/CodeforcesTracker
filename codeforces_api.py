@@ -72,3 +72,23 @@ def get_unsolved_contest_problems(handle):
         contest_id = contest['contestId']
         contest_unsolved[contest_id] = unsolved_problems[contest_id]
     return contest_unsolved
+
+def get_user_info(handle):
+    url = f"https://codeforces.com/api/user.info?handles={handle}"
+    response = requests.get(url)
+    data = response.json()
+    if data['status'] == 'OK':
+        user = data['result'][0]
+        current_rating = user['rating']
+        max_rating = user['maxRating']
+        current_rank = user['rank']
+        max_rank = user['maxRank']
+        avatar = user['avatar']
+        return {
+            'current_rating': current_rating,
+            'max_rating': max_rating,
+            'current_rank': current_rank,
+            'max_rank': max_rank,
+            'avatar': avatar
+        }
+    return None, None, None, None, None

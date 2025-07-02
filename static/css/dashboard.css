@@ -1,11 +1,15 @@
 .container{
     display: flex;
     flex-direction: row;
+    font-family: "Poppins", sans-serif;
 }
 .contests_table{
     margin: 20px;
 }
 .recent_problems{
+    margin: 20px;
+}
+.user_info{
     margin: 20px;
 }
 .problems{
@@ -33,4 +37,28 @@ a {
 
 .tag{
     background-color: lightgray;
+    padding:3px;
+    border-radius: 5px;
+}
+
+.submission{
+    border: 1px solid black;
+    padding: 5px;
+    margin-bottom: 10px;
+}
+.problem_info{
+    padding: 10px;
+}
+.user_info{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.user_info img{
+    border-radius: 50%;
+    border: 3px solid black;
+    margin-bottom: 10px;
+}
+.user_info_description{
+    margin: 5px;
 }
