@@ -9,7 +9,7 @@ def setup_routes(app, db):
             handle = request.form.get('handle')
             if check_handle(handle) is False:
                 return "Invalid Handle", 400
-            return redirect(url_for('dashboard', handle=handle))
+            return redirect(url_for('guest_dashboard', handle=handle))
         else:
             return render_template('index.html')
 
@@ -55,20 +55,18 @@ def setup_routes(app, db):
         else:
             return render_template('login.html')
 
-    @app.route('/dashboard/<handle>', methods=['GET', 'POST'])
-    def dashboard(handle):
+    def render_dashboard(handle, template):
         data = get_problem_tags(handle)
         submissions = get_problem_info(handle)[:5]
         contests = get_user_contests(handle)[:5]
         contests.reverse()
-        contest_problems = []
-        for contest in contests:
-            contest_problems.append(get_contest_problems(contest['contestId']))
+        contest_problems = [get_contest_problems(contest['contestId']) for contest in contests]
         solved_problems = get_solved_contest_problems(handle)
         unsolved_problems = get_unsolved_contest_problems(handle)
         user_info = get_user_info(handle)
+
         return render_template(
-            'dashboard.html',
+            template,
             handle=handle,
             data=data,
             contests=contests,
@@ -78,3 +76,18 @@ def setup_routes(app, db):
             submissions=submissions,
             user_info=user_info
         )
+
+    @app.route('/dashboard/<handle>', methods=['GET', 'POST'])
+    def dashboard(handle):
+        return render_dashboard(handle, 'logged_in_dashboard.html')
+
+    @app.route('/guest_dashboard/<handle>', methods=['GET', 'POST'])
+    def guest_dashboard(handle):
+        return render_dashboard(handle, 'dashboard.html')
+
+    @app.route('/dashboard/<handle>/create_note', methods=['GET', 'POST'])
+    def create_note():
+        if request.method == 'POST':
+
+        else:
+            return render_template('note.html')

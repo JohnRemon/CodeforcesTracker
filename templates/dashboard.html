@@ -18,7 +18,11 @@
             <h2>Recent Contests</h2>
             {% for contest in contests %}
                 <div class="contest">
-                    <h3>{{ contest.contestName }}</h3>
+                    <div class="contest_title">
+                        <h3>
+                            {{ contest.contestName }}
+                        </h3>
+                    </div>
                     <div class="problems">
                         <table>
                             <tr>
@@ -44,25 +48,28 @@
             {% endfor %}
         </div>
         <div class="recent_problems">
-                <h2>Recent Problems</h2>
+            <h2>Recent Problems</h2>
                 {% for sub in submissions %}
                     <div class="submission">
-                        <table class="problem_table">
-                            <tr>
-                                <td class="problem_info"><h4>{{ sub.index }}</h4></td>
-                                <td class="problem_info">
-                                    <h4><a href="https://codeforces.com/problemset/problem/{{ sub.contestId }}/{{ sub.index }}" target="_blank">{{ sub.name }}</a></h4>
-                                </td>
-                                <td class="problem_info"><h4>{{ sub.rating }}</h4></td>
-                                <td class="problem_info">
-                                    {% for tag in sub.tags %}
-                                        <span class="tag">{{ tag }}</span>
-                                    {% endfor %}
-                                </td>
-                            </tr>
-                        </table>
+                        <div class="problem_row">
+                            <div class="problem_info">
+                                <h4>{{ sub.index }}</h4>
+                            </div>
+                            <div class="problem_info">
+                                <h4><a href="https://codeforces.com/problemset/problem/{{ sub.contestId }}/{{ sub.index }}" target="_blank">{{ sub.name }}</a></h4>
+                            </div>
+                            <div class="problem_info"><h4>{{ sub.rating }}</h4></div>
+                            <div class="problem_info tags">
+                                {% for tag in sub.tags %}
+                                    <span class="tag">{{ tag }}</span>
+                                {% endfor %}
+                            </div>
+                            <div class="edit_icon">
+                                {% block note_submission %}{% endblock %}
+                            </div>
+                        </div>
                     </div>
                 {% endfor %}
-            </div>
+        </div>
     </div>
 {% endblock %}

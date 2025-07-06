@@ -1,0 +1,11 @@
+{% extends 'dashboard.html' %}
+
+{% block head %}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    {{ super() }}
+{% endblock %}
+
+{% block note_submission %}
+    <a href="/submission_note"><i class="fa-solid fa-pen note"></i></a>
+
+{% endblock %}
