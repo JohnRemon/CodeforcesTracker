@@ -1,6 +1,5 @@
 from collections import defaultdict
 import requests
-import json
 
 def check_handle(handle):
     url = f"https://codeforces.com/api/user.info?handles={handle}"
@@ -26,7 +25,12 @@ def get_problem_info(handle):
                 problems.append(problem)
                 seen_problems.add(problem_id)
     return problems
-
+def get_specific_problem_info(handle, conest_id, index):
+    submissions = get_user_submissions(handle)
+    for sub in submissions['result']:
+        if sub['contestId'] == conest_id and sub['problem']['index'] == index:
+            return sub['problem']
+    return None
 def get_problem_tags(handle):
     problems = get_problem_info(handle)
     tag_map = defaultdict(set)

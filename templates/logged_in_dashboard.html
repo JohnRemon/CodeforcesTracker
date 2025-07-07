@@ -6,6 +6,11 @@
 {% endblock %}
 
 {% block note_submission %}
-    <a href="/submission_note"><i class="fa-solid fa-pen note"></i></a>
-
+    {{ super() }}
+    <a href="{{ url_for('create_note',
+                       handle=handle,
+                       contest_id=sub.contestId,
+                       problem_index=sub.index) }}">
+        <i class="fa-solid fa-pen note"></i>
+    </a>
 {% endblock %}

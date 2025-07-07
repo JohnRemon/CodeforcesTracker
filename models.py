@@ -24,5 +24,5 @@ class Note(db.Model):
     contest_id = db.Column(db.Integer, nullable=False)
     problem_index = db.Column(db.String, nullable=False)
     problem_name = db.Column(db.String, nullable=False)
-    content = db.Column(db.Text)
+    content = db.Column(db.String(5000))
     timestamp = db.Column(db.DateTime, default=datetime.now(timezone.utc))

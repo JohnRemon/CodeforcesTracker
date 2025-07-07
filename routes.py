@@ -2,6 +2,7 @@ from flask import render_template, request, redirect, url_for
 from codeforces_api import *
 from models import *
 
+
 def setup_routes(app, db):
     @app.route('/', methods=['GET', 'POST'])
     def index():
@@ -85,9 +86,15 @@ def setup_routes(app, db):
     def guest_dashboard(handle):
         return render_dashboard(handle, 'dashboard.html')
 
-    @app.route('/dashboard/<handle>/create_note', methods=['GET', 'POST'])
-    def create_note():
+    @app.route('/dashboard/<handle>/<int:contest_id>/<problem_index>/create_note', methods=['GET', 'POST'])
+    def create_note(handle, contest_id, problem_index):
+        problem = get_specific_problem_info(handle, contest_id, problem_index)
+        print(problem)
+        user = db.session.query(User).filter_by(handle=handle).first()
         if request.method == 'POST':
-
+            note = request.form.get('note')
+            db.session.add(Note(user_id=user.user_id, contest_id=contest_id, problem_index=problem_index, problem_name=problem['name'], content=note, timestamp=datetime.now()))
+            db.session.commit()
+            return redirect(url_for('dashboard', handle=handle))
         else:
-            return render_template('note.html')
+            return render_template('note.html', handle=handle, problem=problem)
