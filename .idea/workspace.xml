@@ -4,16 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a04fb70e-abd0-438e-87b3-2d75c8554247" name="Changes" comment="You can now add notes and they are stored in the database">
-      <change afterPath="$PROJECT_DIR$/cache.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/CodeforcesProgressTracker.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/CodeforcesProgressTracker.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+    <list default="true" id="a04fb70e-abd0-438e-87b3-2d75c8554247" name="Changes" comment="Added the following&#10;1. Caching the data&#10;2. Reg/Login Buttons to guest_dashboard&#10;3. Added the Logic of adding notes">
+      <change afterPath="$PROJECT_DIR$/templates/view_note.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/app.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/codeforces_api.py" beforeDir="false" afterPath="$PROJECT_DIR$/codeforces_api.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/routes.py" beforeDir="false" afterPath="$PROJECT_DIR$/routes.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/dashboard.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/dashboard.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/logged_in_dashboard.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/logged_in_dashboard.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/note.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/add_note.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -24,9 +20,9 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Flask Main" />
-        <option value="HTML File" />
         <option value="CSS File" />
         <option value="Python Script" />
+        <option value="HTML File" />
       </list>
     </option>
   </component>
@@ -139,7 +135,7 @@
       <workItem from="1752010858772" duration="1589000" />
       <workItem from="1752705047393" duration="59000" />
       <workItem from="1752849916234" duration="947000" />
-      <workItem from="1753636114211" duration="3803000" />
+      <workItem from="1753636114211" duration="4841000" />
     </task>
     <task id="LOCAL-00001" summary="Basic Initial Setup of the Application">
       <option name="closed" value="true" />
@@ -245,7 +241,15 @@
       <option name="project" value="LOCAL" />
       <updated>1751899027951</updated>
     </task>
-    <option name="localTasksCounter" value="14" />
+    <task id="LOCAL-00014" summary="Added the following&#10;1. Caching the data&#10;2. Reg/Login Buttons to guest_dashboard&#10;3. Added the Logic of adding notes">
+      <option name="closed" value="true" />
+      <created>1753640222794</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1753640222794</updated>
+    </task>
+    <option name="localTasksCounter" value="15" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -276,7 +280,8 @@
     <MESSAGE value="Implemented a register and login system" />
     <MESSAGE value="Created the Base Logic to add Notes" />
     <MESSAGE value="You can now add notes and they are stored in the database" />
-    <option name="LAST_COMMIT_MESSAGE" value="You can now add notes and they are stored in the database" />
+    <MESSAGE value="Added the following&#10;1. Caching the data&#10;2. Reg/Login Buttons to guest_dashboard&#10;3. Added the Logic of adding notes" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added the following&#10;1. Caching the data&#10;2. Reg/Login Buttons to guest_dashboard&#10;3. Added the Logic of adding notes" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/CodeforcesProgressTracker$Flask__app_py_.coverage" NAME="Flask (app.py) Coverage Results" MODIFIED="1752850348723" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />

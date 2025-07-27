@@ -105,5 +105,17 @@ def setup_routes(app, db):
             db.session.commit()
             return redirect(url_for('dashboard', handle=handle))
         else:
-            return render_template('note.html', handle=handle, problem=problem)
+            return render_template('add_note.html', handle=handle, problem=problem)
+
+
+    @app.route('/dashboard/<handle>/<int:contest_id>/<problem_index>/view_note', methods=['GET'])
+    def view_note(handle, contest_id, problem_index):
+        user = db.session.query(User).filter_by(handle=handle).first()
+        if not user:
+            return "User not found", 404
+        problem = get_specific_problem_info(handle, contest_id, problem_index)
+        note = Note.query.filter_by(user_id=user.user_id,contest_id=contest_id,problem_index=problem_index).first()
+        if not note:
+            return "Note not found", 404
+        return render_template('view_note.html', handle=handle, problem=problem, note=note)
 
