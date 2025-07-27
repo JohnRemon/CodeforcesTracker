@@ -6,11 +6,13 @@
 {% endblock %}
 
 {% block note_submission %}
-    {{ super() }}
-    <a href="{{ url_for('create_note',
-                       handle=handle,
-                       contest_id=sub.contestId,
-                       problem_index=sub.index) }}">
-        <i class="fa-solid fa-pen note"></i>
+    {% set note_exists = notes.get(sub.name, False) %}
+    <a href="{{ url_for('create_note', handle=handle, contest_id=sub.contestId, problem_index=sub.index) }}">
+        <button {% if note_exists %}disabled{% endif %}><i class="fa-solid fa-plus"></i></button>
     </a>
+    {% if note_exists %}
+        <button><i class="fa-regular fa-eye"></i></button>
+    {% else %}
+        <button disabled><i class="fa-regular fa-eye-slash"></i></button>
+    {% endif %}
 {% endblock %}

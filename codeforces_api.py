@@ -1,18 +1,24 @@
 from collections import defaultdict
 import requests
+from cache import cache
+from models import Note
 
+
+@cache.memoize(timeout=3600)
 def check_handle(handle):
     url = f"https://codeforces.com/api/user.info?handles={handle}"
     response = requests.get(url)
     data = response.json()
     return data['status'] == 'OK'
 
+@cache.memoize(timeout=3600)
 def get_user_submissions(handle):
     url = f"https://codeforces.com/api/user.status?handle={handle}"
     response = requests.get(url)
     data = response.json()
     return data
 
+@cache.memoize(timeout=3600)
 def get_problem_info(handle):
     data = get_user_submissions(handle)
     problems = []
@@ -25,12 +31,16 @@ def get_problem_info(handle):
                 problems.append(problem)
                 seen_problems.add(problem_id)
     return problems
-def get_specific_problem_info(handle, conest_id, index):
+
+@cache.memoize(timeout=3600)
+def get_specific_problem_info(handle, contest_id, index):
     submissions = get_user_submissions(handle)
     for sub in submissions['result']:
-        if sub['contestId'] == conest_id and sub['problem']['index'] == index:
+        if sub['contestId'] == contest_id and sub['problem']['index'] == index:
             return sub['problem']
     return None
+
+@cache.memoize(timeout=3600)
 def get_problem_tags(handle):
     problems = get_problem_info(handle)
     tag_map = defaultdict(set)
@@ -39,18 +49,21 @@ def get_problem_tags(handle):
             tag_map[tag].add(problem['name'])
     return tag_map
 
+@cache.memoize(timeout=3600)
 def get_user_contests(handle):
     url = f"https://codeforces.com/api/user.rating?handle={handle}"
     response = requests.get(url)
     data = response.json()
     return data['result']
 
+@cache.memoize(timeout=3600)
 def get_contest_problems(contest_id):
     url = f"https://codeforces.com/api/contest.standings?contestId={contest_id}&from=1&count=1"
     response = requests.get(url)
     data = response.json()
     return data['result']['problems']
 
+@cache.memoize(timeout=3600)
 def get_solved_contest_problems(handle):
     submissions = get_user_submissions(handle)['result']
     contests = get_user_contests(handle)
@@ -67,6 +80,7 @@ def get_solved_contest_problems(handle):
         contest_solved[contest_id] = solved_problems[contest_id]
     return contest_solved
 
+@cache.memoize(timeout=3600)
 def get_unsolved_contest_problems(handle):
     submissions = get_user_submissions(handle)['result']
     contests = get_user_contests(handle)
@@ -83,6 +97,7 @@ def get_unsolved_contest_problems(handle):
         contest_unsolved[contest_id] = unsolved_problems[contest_id]
     return contest_unsolved
 
+@cache.memoize(timeout=3600)
 def get_user_info(handle):
     url = f"https://codeforces.com/api/user.info?handles={handle}"
     response = requests.get(url)

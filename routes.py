@@ -56,7 +56,7 @@ def setup_routes(app, db):
         else:
             return render_template('login.html')
 
-    def render_dashboard(handle, template):
+    def render_dashboard(handle, template, logged_in=False):
         data = get_problem_tags(handle)
         submissions = get_problem_info(handle)[:5]
         contests = get_user_contests(handle)[:5]
@@ -65,6 +65,13 @@ def setup_routes(app, db):
         solved_problems = get_solved_contest_problems(handle)
         unsolved_problems = get_unsolved_contest_problems(handle)
         user_info = get_user_info(handle)
+        user = db.session.query(User).filter_by(handle=handle).first()
+        notes = {}
+        if user:
+            for sub in submissions:
+                note = Note.query.filter_by(user_id=user.user_id, problem_name=sub['name']).first()
+                notes[sub['name']] = note is not None
+
 
         return render_template(
             template,
@@ -75,21 +82,22 @@ def setup_routes(app, db):
             solved_problems=solved_problems,
             unsolved_problems=unsolved_problems,
             submissions=submissions,
-            user_info=user_info
+            user_info=user_info,
+            logged_in=logged_in,
+            notes=notes,
         )
 
     @app.route('/dashboard/<handle>', methods=['GET', 'POST'])
     def dashboard(handle):
-        return render_dashboard(handle, 'logged_in_dashboard.html')
+        return render_dashboard(handle, 'logged_in_dashboard.html', logged_in=True)
 
     @app.route('/guest_dashboard/<handle>', methods=['GET', 'POST'])
     def guest_dashboard(handle):
-        return render_dashboard(handle, 'dashboard.html')
+        return render_dashboard(handle, 'dashboard.html', logged_in=False)
 
     @app.route('/dashboard/<handle>/<int:contest_id>/<problem_index>/create_note', methods=['GET', 'POST'])
     def create_note(handle, contest_id, problem_index):
         problem = get_specific_problem_info(handle, contest_id, problem_index)
-        print(problem)
         user = db.session.query(User).filter_by(handle=handle).first()
         if request.method == 'POST':
             note = request.form.get('note')
@@ -98,3 +106,4 @@ def setup_routes(app, db):
             return redirect(url_for('dashboard', handle=handle))
         else:
             return render_template('note.html', handle=handle, problem=problem)
+
