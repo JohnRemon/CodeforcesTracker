@@ -63,6 +63,12 @@ def setup_routes(app, db):
             return render_template('login.html', error_message=error_message)
         else:
             return render_template('login.html')
+        
+    @login_required
+    @app.route('/logout')
+    def logout():
+        session.pop('user', None)
+        return redirect(url_for('index'))
 
     def render_dashboard(handle, template, logged_in=False):
         data = get_problem_tags(handle)
