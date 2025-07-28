@@ -27,7 +27,7 @@
             {% for contest in contests %}
                 <div class="contest" data-index="{{ loop.index0 }}" style="display: none;">
                     <div class="contest_title">
-                        <h3>{{ contest.contestName }}</h3>
+                        <h4>{{ contest.contestName }}</h4>
                     </div>
                     <div class="problems">
                         <table>
@@ -63,7 +63,7 @@
                         <div class="problem_info">
                             <h4>{{ sub.index }}</h4>
                         </div>
-                        <div class="problem_info">
+                        <div class="problem_info problem_name">
                             <h4><a href="https://codeforces.com/problemset/problem/{{ sub.contestId }}/{{ sub.index }}" target="_blank">{{ sub.name }}</a></h4>
                         </div>
                         <div class="problem_info"><h4>{{ sub.rating }}</h4></div>
@@ -96,12 +96,12 @@
 
 
         function loadMoreContests() {
-            //Start at the index and display 5 contests or less if there are not enough left
-            for(let i = contestIndex; i < contestIndex + 5 && i < contests.length; i++) {
+            //Start at the index and display 4 contests or less if there are not enough left
+            for(let i = contestIndex; i < contestIndex + 4 && i < contests.length; i++) {
                 contests[i].style.display = 'block';
             }
 
-            contestIndex += 5;
+            contestIndex += 4;
             //If all contests are displayed, hide the button
             if (contestIndex >= contests.length) {
                 loadMoreContestsBtn.textContent = 'No More Contests';
@@ -110,12 +110,12 @@
         }
 
         function loadMoreSubmissions() {
-            //Start at the index and display 5 submissions or less if there are not enough left
-            for(let i = submissionIndex; i < submissionIndex + 5 && i < submissions.length; i++) {
+            //Start at the index and display 4 submissions or less if there are not enough left
+            for(let i = submissionIndex; i < submissionIndex + 4 && i < submissions.length; i++) {
                 submissions[i].style.display = 'block';
             }
 
-            submissionIndex += 5;
+            submissionIndex += 4;
             //If all submissions are displayed, hide the button
             if(submissionIndex >= submissions.length) {
                 loadMoreSubmissionsBtn.textContent = 'No More Submissions';

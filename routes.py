@@ -56,7 +56,7 @@ def setup_routes(app, db):
             user = db.session.query(User).filter_by(email=email).first()
             if user is None:
                 error_message = "Account does not exist. Please register."
-            if not user.check_password(password):
+            elif not user.check_password(password):
                 error_message = "Invalid Password."
             if error_message is None:
                 session['user_id'] = user.user_id
