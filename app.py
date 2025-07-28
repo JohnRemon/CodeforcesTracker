@@ -6,6 +6,7 @@ app = Flask(__name__)
 
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+app.secret_key = '3212r123'
 db.init_app(app)
 
 app.config['CACHE_TYPE'] = 'SimpleCache'

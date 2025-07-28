@@ -4,7 +4,20 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
     {{ super() }}
 {% endblock %}
+{% block logged_out_button %}
+    <button><a href="/logout">Logout</a></button>
+{% endblock %}
 
+{% block user_info %}
+    <div class="user_info">
+        <h2>Welcome, {{ handle }}!</h2>
+        <img src="{{ user_info.avatar }}" alt="Avatar">
+        <h4 class="user_info_description">Rating: {{ user_info.current_rating }}</h4>
+        <h4 class="user_info_description">Rank: {{ user_info.current_rank }}</h4>
+        <h4 class="user_info_description">Max Rating: {{ user_info.max_rating }}</h4>
+        <h4 class="user_info_description">Max Rank: {{ user_info.max_rank }}</h4>
+    </div>
+{% endblock %}
 {% block note_submission %}
     {% set note_exists = notes.get(sub.name, False) %}
 

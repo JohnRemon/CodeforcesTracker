@@ -6,7 +6,7 @@ from models import *
 def login_required(f):
     @wraps(f)
     def decorated_function(*args, **kwargs):
-        if 'user' not in session:
+        if 'user_id' not in session:
             return redirect(url_for('login'))
         return f(*args, **kwargs)
     return decorated_function
@@ -64,10 +64,10 @@ def setup_routes(app, db):
         else:
             return render_template('login.html')
         
-    @login_required
     @app.route('/logout')
+    @login_required
     def logout():
-        session.pop('user', None)
+        session.pop('user_id', None)
         return redirect(url_for('index'))
 
     def render_dashboard(handle, template, logged_in=False):
@@ -102,16 +102,16 @@ def setup_routes(app, db):
         )
 
     @app.route('/dashboard/<handle>', methods=['GET', 'POST'])
+    @login_required
     def dashboard(handle):
         return render_dashboard(handle, 'logged_in_dashboard.html', logged_in=True)
 
-    @login_required
     @app.route('/guest_dashboard/<handle>', methods=['GET', 'POST'])
     def guest_dashboard(handle):
         return render_dashboard(handle, 'dashboard.html', logged_in=False)
 
-    @login_required
     @app.route('/dashboard/<handle>/<int:contest_id>/<problem_index>/create_note', methods=['GET', 'POST'])
+    @login_required
     def create_note(handle, contest_id, problem_index):
         problem = get_specific_problem_info(handle, contest_id, problem_index)
         user = db.session.query(User).filter_by(handle=handle).first()
@@ -123,8 +123,8 @@ def setup_routes(app, db):
         else:
             return render_template('add_note.html', handle=handle, problem=problem)
 
-    @login_required
     @app.route('/dashboard/<handle>/<int:contest_id>/<problem_index>/view_note', methods=['GET'])
+    @login_required
     def view_note(handle, contest_id, problem_index):
         user = db.session.query(User).filter_by(handle=handle).first()
         if not user:
