@@ -59,6 +59,7 @@ def setup_routes(app, db):
             if not user.check_password(password):
                 error_message = "Invalid Password."
             if error_message is None:
+                session['user_id'] = user.user_id
                 return redirect(url_for('dashboard', handle=user.handle))
             return render_template('login.html', error_message=error_message)
         else:
@@ -72,8 +73,8 @@ def setup_routes(app, db):
 
     def render_dashboard(handle, template, logged_in=False):
         data = get_problem_tags(handle)
-        submissions = get_problem_info(handle)[:5]
-        contests = get_user_contests(handle)[:5]
+        submissions = get_problem_info(handle)
+        contests = get_user_contests(handle)
         contests.reverse()
         contest_problems = [get_contest_problems(contest['contestId']) for contest in contests]
         solved_problems = get_solved_contest_problems(handle)

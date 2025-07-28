@@ -8,15 +8,25 @@ body{
     width: 100%;
 }
 .contests_table{
-    margin: 20px;
+    margin: 0 20px;
     flex: 1;
+
+    /* Scroll settings */
+    max-height: 600px; 
+    overflow-y: auto;
+
 }
 .recent_problems{
-    margin: 20px;
+    margin: 0 20px;
     flex: 1;
+
+    /* Scroll settings */
+    max-height: 600px; 
+    overflow-y: auto;
+    padding: 10px;
+
 }
 .user_info{
-    margin: 20px;
     flex: 1;
 }
 .problems{
@@ -107,4 +117,16 @@ a {
 .note{
     font-size: 12px;
     padding-bottom: 10px;
+}
+
+.load-more{
+    display: block;
+    width: 30%;
+    margin: 20px auto;
+    padding: 10px;
+    background-color: black;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
 }

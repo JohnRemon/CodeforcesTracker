@@ -15,20 +15,19 @@
             <h4 class="user_info_description">Max Rating: {{ user_info.max_rating }}</h4>
             <h4 class="user_info_description">Max Rank: {{ user_info.max_rank }}</h4>
             {% if not logged_in %}
-            <button><a href="/login">Login</a></button>
-            <p>or</p>
-            <button><a href="/register">Register</a></button>
-            <p>To be able to access our NoteTaking Feature</p>
+                <button><a href="/login">Login</a></button>
+                <p>or</p>
+                <button><a href="/register">Register</a></button>
+                <p>To be able to access our NoteTaking Feature</p>
             {% endif %}
         </div>
+
         <div class="contests_table">
             <h2>Recent Contests</h2>
             {% for contest in contests %}
-                <div class="contest">
+                <div class="contest" data-index="{{ loop.index0 }}" style="display: none;">
                     <div class="contest_title">
-                        <h3>
-                            {{ contest.contestName }}
-                        </h3>
+                        <h3>{{ contest.contestName }}</h3>
                     </div>
                     <div class="problems">
                         <table>
@@ -53,31 +52,85 @@
                     </div>
                 </div>
             {% endfor %}
+            <button class="load-more" id="load-more-contests">Load More</button>
         </div>
+
         <div class="recent_problems">
             <h2>Recent Problems</h2>
-                {% for sub in submissions %}
-                    <div class="submission">
-                        <div class="problem_row">
-                            <div class="problem_info">
-                                <h4>{{ sub.index }}</h4>
-                            </div>
-                            <div class="problem_info">
-                                <h4><a href="https://codeforces.com/problemset/problem/{{ sub.contestId }}/{{ sub.index }}" target="_blank">{{ sub.name }}</a></h4>
-                            </div>
-                            <div class="problem_info"><h4>{{ sub.rating }}</h4></div>
-                            <div class="problem_info tags">
-                                {% for tag in sub.tags %}
-                                    <span class="tag">{{ tag }}</span>
-                                {% endfor %}
-                            </div>
-                            <div class="edit_icon">
-                                {% block note_submission scoped%}{% endblock %}
-                            </div>
+            {% for sub in submissions %}
+                <div class="submission" data-index="{{ loop.index0 }}" style="display: none;">
+                    <div class="problem_row">
+                        <div class="problem_info">
+                            <h4>{{ sub.index }}</h4>
+                        </div>
+                        <div class="problem_info">
+                            <h4><a href="https://codeforces.com/problemset/problem/{{ sub.contestId }}/{{ sub.index }}" target="_blank">{{ sub.name }}</a></h4>
+                        </div>
+                        <div class="problem_info"><h4>{{ sub.rating }}</h4></div>
+                        <div class="problem_info tags">
+                            {% for tag in sub.tags %}
+                                <span class="tag">{{ tag }}</span>
+                            {% endfor %}
+                        </div>
+                        <div class="edit_icon">
+                            {% block note_submission scoped %}{% endblock %}
                         </div>
                     </div>
-                {% endfor %}
-                <button>Load More</button>
+                </div>
+            {% endfor %}
+            <button class="load-more" id="load-more-problems">Load More</button>
         </div>
     </div>
+
+    <script>
+        //The Contest / Problem Index
+        let contestIndex = 0;
+        let submissionIndex = 0;
+
+        //Get all Contests and Submissions
+        const contests = document.querySelectorAll('.contest');
+        const submissions = document.querySelectorAll('.submission');
+
+        const loadMoreContestsBtn = document.getElementById('load-more-contests');
+        const loadMoreSubmissionsBtn = document.getElementById('load-more-problems');
+
+
+        function loadMoreContests() {
+            //Start at the index and display 5 contests or less if there are not enough left
+            for(let i = contestIndex; i < contestIndex + 5 && i < contests.length; i++) {
+                contests[i].style.display = 'block';
+            }
+
+            contestIndex += 5;
+            //If all contests are displayed, hide the button
+            if (contestIndex >= contests.length) {
+                loadMoreContestsBtn.textContent = 'No More Contests';
+                loadMoreContestsBtn.disabled = true;
+            }
+        }
+
+        function loadMoreSubmissions() {
+            //Start at the index and display 5 submissions or less if there are not enough left
+            for(let i = submissionIndex; i < submissionIndex + 5 && i < submissions.length; i++) {
+                submissions[i].style.display = 'block';
+            }
+
+            submissionIndex += 5;
+            //If all submissions are displayed, hide the button
+            if(submissionIndex >= submissions.length) {
+                loadMoreSubmissionsBtn.textContent = 'No More Submissions';
+                loadMoreSubmissions.disabled = true;
+            }
+        }
+
+        //load the first 5 of contests and submissions
+        loadMoreContests();
+        loadMoreSubmissions();
+
+        //Load more contests
+        loadMoreContestsBtn.addEventListener('click', loadMoreContests);
+        //Load more submissions
+        loadMoreSubmissionsBtn.addEventListener('click', loadMoreSubmissions);
+
+    </script>
 {% endblock %}
