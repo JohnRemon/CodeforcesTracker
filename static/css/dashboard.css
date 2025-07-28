@@ -11,6 +11,7 @@ h4{
     display: flex;
     flex-direction: row;
     width: 100%;
+    margin-top: 30px;
 }
 .contests_table{
     margin: 0 0 0 20px;
