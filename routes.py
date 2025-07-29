@@ -1,8 +1,11 @@
-from flask import render_template, request, redirect, url_for, session
+from datetime import timedelta, datetime
+from flask import render_template, request, redirect, url_for, session, current_app
 from functools import wraps
 from codeforces_api import *
 from models import *
 import openai
+import jwt
+from flask_mail import Message
 
 def login_required(f):
     @wraps(f)
@@ -11,7 +14,11 @@ def login_required(f):
             return redirect(url_for('login'))
         return f(*args, **kwargs)
     return decorated_function
-
+def send_email(email, token):
+    reset_link = url_for('reset_password_with_token', token=token, _external=True)
+    msg = Message("Password Reset Request", recipients=[email],
+                    body=f"Click the link to reset your password: {reset_link}")
+    current_app.extensions['mail'].send(msg)
 def setup_routes(app, db):
     @app.route('/', methods=['GET', 'POST'])
     def index():
@@ -67,6 +74,58 @@ def setup_routes(app, db):
         else:
             return render_template('login.html')
         
+    @app.route('/reset_password', methods=['GET', 'POST'])
+    def reset_password():
+        if request.method == 'POST':
+            email = request.form.get('email')
+            error_message = None
+            user = db.session.query(User).filter_by(email=email).first()
+            if not user:
+                error_message = "Account Does Not Exit. Please Register"
+            if error_message is None:
+                success_message = "An email was sent. Link expires in 10 minutes."
+                token = jwt.encode(
+                    {
+                        'email': email,
+                        'exp': datetime.now() + timedelta(minutes=10)
+                    },
+                    'secret_key',
+                    algorithm='HS256'
+                )
+                send_email(email, token)
+                return render_template('reset_password.html', success_message=success_message)
+            else:
+                return render_template('reset_password.html', error_message=error_message)
+            
+        return render_template('reset_password.html')
+    @app.route('/reset-password/<token>', methods=['GET', 'POST'])
+    def reset_password_with_token(token):
+        try:
+            data = jwt.decode(token, 'secret_key', algorithms=['HS256'])
+            email = data['email']
+        except jwt.ExpiredSignatureError:
+            return render_template('new_password.html', error_message="Token expired. Please request a new password reset.")
+        except jwt.InvalidTokenError:
+            return render_template('new_password.html', error_message="Invalid token. Please request a new password reset.")
+
+        if request.method == 'POST':
+            new_password = request.form.get('new_password')
+            confirm_password = request.form.get('confirm_password')
+
+            if new_password != confirm_password:
+                return render_template('new_password.html', error_message="Passwords do not match.")
+
+            user = db.session.query(User).filter_by(email=email).first()
+            if user:
+                user.set_password(new_password) 
+                db.session.commit()
+                success_message = "Password reset successfully. You can now log in."
+                return render_template('login.html', success_message=success_message)
+            else:
+                return render_template('new_password.html', error_message="User not found.")
+
+        return render_template('new_password.html')
+
     @app.route('/logout')
     @login_required
     def logout():
