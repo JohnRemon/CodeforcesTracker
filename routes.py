@@ -2,6 +2,7 @@ from flask import render_template, request, redirect, url_for, session
 from functools import wraps
 from codeforces_api import *
 from models import *
+import openai
 
 def login_required(f):
     @wraps(f)
@@ -147,3 +148,31 @@ def setup_routes(app, db):
             db.session.commit()
             return redirect(url_for('dashboard', handle=handle))
         return render_template('add_solution.html', handle=handle, problem=problem)
+    
+    @app.route('/dashboard/<handle>/<int:contest_id>/<problem_index>/ai_review', methods=['GET'])
+    @login_required
+    def ai_review(handle, contest_id, problem_index):
+        problem = get_specific_problem_info(handle, contest_id, problem_index)
+        user_code = Solution.query.filter_by(user_id=session['user_id'], contest_id=contest_id, problem_index=problem_index).first()
+        prompt = f"""
+        Here is a codeforces problem:
+        Problem Name: {problem['name']}
+        Problem Index: {problem_index}
+        Problem Statement: {problem['description']}
+        Here is the user's solution:
+        {user_code.code if user_code else "No solution submitted yet."}
+        Please provide:
+        1. An optimal Solution
+        2. a comparison between the user's solution and the optimal solution
+        3. a review of the user's solution
+        4. suggestions for improvement
+        """
+        
+        message = openai.ChatCompletion.create(
+            model="gpt-4",
+            messages=[
+                {"role": "user", "content": prompt}
+            ]
+        )
+        response = message['choices'][0]['message']['content']
+        return render_template('ai_review.html', handle=handle, problem=problem, response=response)
