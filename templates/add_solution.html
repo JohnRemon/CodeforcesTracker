@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block head %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/add_solution.css') }}">
+{% endblock %}
+{% block body %}
+    <h4>Problem Name: {{ problem.name }}</h4>
+    <h4>Problem Index: {{ problem.index }}</h4>
+    <h4>Problem Tags: {% for tag in problem.tags %}{{ tag }} {% endfor %}</h4>
+    <h4>Problem Rating: {{ problem.rating }}</h4>
+    <form method="POST">
+        <label for="note">Add Solution</label>
+        <textarea rows="20" cols="100" name="solution" id="solution" placeholder="Enter your solution here ..."></textarea>
+        <a href="{{ url_for('dashboard', handle=handle) }}"><button>Cancel</button></a>
+        <button type="submit">Save</button>
+    </form>
+{% endblock %}

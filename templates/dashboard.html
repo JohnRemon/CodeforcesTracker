@@ -25,7 +25,11 @@
         </div>
 
         <div class="contests_table">
-            <h2>Recent Contests</h2>
+            <div class="contest_submission_header">
+                <h2>Recent Contests</h2>
+                <button id="reset_contests" class="reset_btn">Reset</button>
+            </div>
+            <div class="contests_container">
             {% for contest in contests %}
                 <div class="contest" data-index="{{ loop.index0 }}" style="display: none;">
                     <div class="contest_title">
@@ -54,11 +58,16 @@
                     </div>
                 </div>
             {% endfor %}
+            </div>
             <button class="load-more" id="load-more-contests">Load More</button>
         </div>
 
         <div class="recent_problems">
-            <h2>Recent Problems</h2>
+            <div class="contest_submission_header">
+                <h2>Recent Problems</h2>
+                <button id="reset_submissions" class="reset_btn">Reset</button>
+            </div>
+            <div class="recent_problems_container">
             {% for sub in submissions %}
                 <div class="submission" data-index="{{ loop.index0 }}" style="display: none;">
                     <div class="problem_row">
@@ -80,6 +89,7 @@
                     </div>
                 </div>
             {% endfor %}
+            </div>
             <button class="load-more" id="load-more-problems">Load More</button>
         </div>
     </div>
@@ -95,15 +105,17 @@
 
         const loadMoreContestsBtn = document.getElementById('load-more-contests');
         const loadMoreSubmissionsBtn = document.getElementById('load-more-problems');
+        const resetContestsBtn = document.getElementById('reset_contests');
+        const resetSubmissionsBtn = document.getElementById('reset_submissions')
 
 
         function loadMoreContests() {
-            //Start at the index and display 4 contests or less if there are not enough left
-            for(let i = contestIndex; i < contestIndex + 4 && i < contests.length; i++) {
+            //Start at the index and display 5 contests or less if there are not enough left
+            for(let i = contestIndex; i < contestIndex + 5 && i < contests.length; i++) {
                 contests[i].style.display = 'block';
             }
 
-            contestIndex += 4;
+            contestIndex += 5;
             //If all contests are displayed, hide the button
             if (contestIndex >= contests.length) {
                 loadMoreContestsBtn.textContent = 'No More Contests';
@@ -112,17 +124,41 @@
         }
 
         function loadMoreSubmissions() {
-            //Start at the index and display 4 submissions or less if there are not enough left
-            for(let i = submissionIndex; i < submissionIndex + 4 && i < submissions.length; i++) {
+            //Start at the index and display 5 submissions or less if there are not enough left
+            for(let i = submissionIndex; i < submissionIndex + 5 && i < submissions.length; i++) {
                 submissions[i].style.display = 'block';
             }
 
-            submissionIndex += 4;
+            submissionIndex += 5;
             //If all submissions are displayed, hide the button
             if(submissionIndex >= submissions.length) {
-                loadMoreSubmissionsBtn.textContent = 'No More Submissions';
+                loadMoreSubmissionsBtn.textContent = 'No More Problems';
                 loadMoreSubmissions.disabled = true;
             }
+        }
+
+        function resetSubmissions() {
+            //Only display the first 5 submissions
+            for(let i = 0; i < submissions.length; i++){
+                if(i < 5)
+                    submissions[i].style.display = 'block'
+                else
+                    submissions[i].style.display = 'none'
+            }
+            // reset index to 0 to start from the beginning again
+            submissionIndex = 0;
+        }
+
+        function resetContests() {
+            //Only display the first 5 contests
+            for(let i = 0; i < contests.length; i++){
+                if(i < 5)
+                    contests[i].style.display = 'block'
+                else
+                    contests[i].style.display = 'none'
+            }
+            // reset index to 0 to start from the beginning again
+            contestIndex = 0;
         }
 
         //load the first 5 of contests and submissions
@@ -133,6 +169,10 @@
         loadMoreContestsBtn.addEventListener('click', loadMoreContests);
         //Load more submissions
         loadMoreSubmissionsBtn.addEventListener('click', loadMoreSubmissions);
+        //reset contests
+        resetContestsBtn.addEventListener('click', resetContests)
+        //reset submissions
+        resetSubmissionsBtn.addEventListener('click', resetSubmissions)
 
     </script>
 {% endblock %}

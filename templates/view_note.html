@@ -1,14 +1,24 @@
 {% extends 'base.html' %}
 
-{% block head %}{% endblock %}
+{% block head %}
     <link rel="stylesheet" href="{{ url_for('static', filename='css/note.css') }}">
+{% endblock %}
 {% block body %}
-    <form method="POST">
-        <label for="note">View Note</label>
-        <textarea rows="10" cols="100" name="note" id="note" placeholder="Enter your notes here ...">{{ note.content }}</textarea>
-    </form>
     <h4>Problem Name: {{ problem.name }}</h4>
     <h4>Problem Index: {{ problem.index }}</h4>
     <h4>Problem Tags: {% for tag in problem.tags %}{{ tag }} {% endfor %}</h4>
     <h4>Problem Rating: {{ problem.rating }}</h4>
+    <h4>Notes</h4>
+    <div class="container">
+        <div class="notes_container">
+            {% for note in notes %}
+                <div class="note_block">
+                    <p>{{ note.content }}</p>
+                </div>
+            {% endfor %}
+        </div>
+        <div class="solution_container">
+            <pre><code>{{ solution.code }}</code></pre>
+        </div>
+    </div>
 {% endblock %}

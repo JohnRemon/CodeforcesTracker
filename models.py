@@ -26,3 +26,13 @@ class Note(db.Model):
     problem_name = db.Column(db.String, nullable=False)
     content = db.Column(db.String(5000))
     timestamp = db.Column(db.DateTime, default=datetime.now(timezone.utc))
+
+class Solution(db.Model):
+    __tablename__ = 'solution'
+    solution_id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.user_id'), nullable=False)
+    contest_id = db.Column(db.Integer, nullable=False)
+    problem_index = db.Column(db.String, nullable=False)
+    problem_name = db.Column(db.String, nullable=False)
+    code = db.Column(db.Text, nullable=False)
+    timestamp = db.Column(db.DateTime, default=datetime.now(timezone.utc))

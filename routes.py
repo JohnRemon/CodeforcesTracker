@@ -41,6 +41,7 @@ def setup_routes(app, db):
                 user.set_password(password)
                 db.session.add(user)
                 db.session.commit()
+                session['user_id'] = user.user_id
                 return redirect(url_for('dashboard', handle=handle))
             return render_template('register.html', error_message=error_message)
         else:
@@ -131,8 +132,18 @@ def setup_routes(app, db):
         if not user:
             return "User not found", 404
         problem = get_specific_problem_info(handle, contest_id, problem_index)
-        note = Note.query.filter_by(user_id=user.user_id,contest_id=contest_id,problem_index=problem_index).first()
-        if not note:
-            return "Note not found", 404
-        return render_template('view_note.html', handle=handle, problem=problem, note=note)
+        notes = Note.query.filter_by(user_id=user.user_id,contest_id=contest_id,problem_index=problem_index).all()
+        solution = Solution.query.filter_by(user_id=user.user_id, contest_id=contest_id, problem_index=problem_index).first()
+        return render_template('view_note.html', handle=handle, problem=problem, notes=notes, solution=solution)
 
+    @app.route('/dashboard/<handle>/<int:contest_id>/<problem_index>/add_solution', methods=['GET', 'POST'])
+    @login_required
+    def add_solution(handle, contest_id, problem_index):
+        problem = get_specific_problem_info(handle, contest_id, problem_index)
+        user = db.session.query(User).filter_by(handle=handle).first()
+        if request.method == 'POST':
+            code = request.form.get('solution')
+            db.session.add(Solution(user_id=user.user_id, contest_id=contest_id, problem_index=problem_index, problem_name=problem['name'], code=code, timestamp=datetime.now()))
+            db.session.commit()
+            return redirect(url_for('dashboard', handle=handle))
+        return render_template('add_solution.html', handle=handle, problem=problem)

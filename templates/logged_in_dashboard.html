@@ -2,6 +2,7 @@
 
 {% block head %}
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/logged_in_dashboard.css') }}">
     {{ super() }}
 {% endblock %}
 {% block logged_out_button %}
@@ -19,12 +20,12 @@
     </div>
 {% endblock %}
 {% block note_submission %}
-    {% set note_exists = notes.get(sub.name, False) %}
-
-
-    {% if note_exists %}
-        <a href="{{ url_for('view_note', handle=handle, contest_id=sub.contestId, problem_index=sub.index) }}"><i class="fa-regular fa-eye"></i></a>
-    {% else %}
+    <div class="function_icons">
+        {% set note_exists = notes.get(sub.name, False) %}
+        {% if note_exists %}
+            <a href="{{ url_for('view_note', handle=handle, contest_id=sub.contestId, problem_index=sub.index) }}"><i class="fa-regular fa-eye"></i></a>
+        {% endif %}
         <a href="{{ url_for('create_note', handle=handle, contest_id=sub.contestId, problem_index=sub.index) }}"><i class="fa-solid fa-plus"></i></a>
-    {% endif %}
+        <a href="{{ url_for('add_solution', handle=handle, contest_id=sub.contestId, problem_index=sub.index)}}"><i class="fa-solid fa-code"></i></a>
+    </div>
 {% endblock %}
