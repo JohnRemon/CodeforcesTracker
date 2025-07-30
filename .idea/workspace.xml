@@ -4,12 +4,28 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a04fb70e-abd0-438e-87b3-2d75c8554247" name="Changes" comment="Added the following&#10;1. Caching the data&#10;2. Reg/Login Buttons to guest_dashboard&#10;3. Added the Logic of adding notes">
-      <change afterPath="$PROJECT_DIR$/templates/view_note.html" afterDir="false" />
+    <list default="true" id="a04fb70e-abd0-438e-87b3-2d75c8554247" name="Changes" comment="You can now add a note (but only one) and view it for each problem">
+      <change afterPath="$PROJECT_DIR$/scraping.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/css/edit_note.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/css/new_password.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/css/notes_dashboard.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/auth/new_password.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/note/edit_note.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/app.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/routes.py" beforeDir="false" afterPath="$PROJECT_DIR$/routes.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/logged_in_dashboard.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/logged_in_dashboard.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/note.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/add_note.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/css/dashboard.css" beforeDir="false" afterPath="$PROJECT_DIR$/static/css/dashboard.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/css/note.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/add_note.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/note/add_note.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/add_solution.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/note/add_solution.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/base.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/dashboard/base.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/dashboard.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/dashboard/dashboard.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/dashboard/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/logged_in_dashboard.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/dashboard/logged_in_dashboard.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/login.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/auth/login.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/register.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/auth/register.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/reset_password.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/auth/reset_password.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/view_note.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/note/view_note.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -20,9 +36,9 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Flask Main" />
-        <option value="CSS File" />
         <option value="Python Script" />
         <option value="HTML File" />
+        <option value="CSS File" />
       </list>
     </option>
   </component>
@@ -73,6 +89,7 @@
     &quot;Flask server.CodeforcesProgressTracker.executor&quot;: &quot;Run&quot;,
     &quot;Flask server.Flask (app.py).executor&quot;: &quot;Run&quot;,
     &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;Python.scraping.executor&quot;: &quot;Run&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
     &quot;git-widget-placeholder&quot;: &quot;master&quot;,
@@ -87,7 +104,37 @@
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
 }</component>
-  <component name="RunManager">
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="G:\CodeforcesProgressTracker\templates\note" />
+      <recent name="G:\CodeforcesProgressTracker\templates\dashboard" />
+      <recent name="G:\CodeforcesProgressTracker\templates\auth" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Flask server.CodeforcesProgressTracker">
+    <configuration name="scraping" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="CodeforcesProgressTracker" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/scraping.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
     <configuration name="CodeforcesProgressTracker" type="Python.FlaskServer">
       <option name="flaskDebug" value="true" />
       <module name="CodeforcesProgressTracker" />
@@ -105,6 +152,11 @@
       <option name="launchJavascriptDebuger" value="false" />
       <method v="2" />
     </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Python.scraping" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="SharedIndexes">
     <attachedChunks>
@@ -135,7 +187,10 @@
       <workItem from="1752010858772" duration="1589000" />
       <workItem from="1752705047393" duration="59000" />
       <workItem from="1752849916234" duration="947000" />
-      <workItem from="1753636114211" duration="4841000" />
+      <workItem from="1753636114211" duration="5903000" />
+      <workItem from="1753717082766" duration="191000" />
+      <workItem from="1753813970057" duration="2054000" />
+      <workItem from="1753887452581" duration="11074000" />
     </task>
     <task id="LOCAL-00001" summary="Basic Initial Setup of the Application">
       <option name="closed" value="true" />
@@ -249,7 +304,15 @@
       <option name="project" value="LOCAL" />
       <updated>1753640222794</updated>
     </task>
-    <option name="localTasksCounter" value="15" />
+    <task id="LOCAL-00015" summary="You can now add a note (but only one) and view it for each problem">
+      <option name="closed" value="true" />
+      <created>1753641425422</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1753641425422</updated>
+    </task>
+    <option name="localTasksCounter" value="16" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -281,10 +344,12 @@
     <MESSAGE value="Created the Base Logic to add Notes" />
     <MESSAGE value="You can now add notes and they are stored in the database" />
     <MESSAGE value="Added the following&#10;1. Caching the data&#10;2. Reg/Login Buttons to guest_dashboard&#10;3. Added the Logic of adding notes" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added the following&#10;1. Caching the data&#10;2. Reg/Login Buttons to guest_dashboard&#10;3. Added the Logic of adding notes" />
+    <MESSAGE value="You can now add a note (but only one) and view it for each problem" />
+    <option name="LAST_COMMIT_MESSAGE" value="You can now add a note (but only one) and view it for each problem" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/CodeforcesProgressTracker$Flask__app_py_.coverage" NAME="Flask (app.py) Coverage Results" MODIFIED="1752850348723" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
-    <SUITE FILE_PATH="coverage/CodeforcesProgressTracker$CodeforcesProgressTracker.coverage" NAME="CodeforcesProgressTracker Coverage Results" MODIFIED="1753636116200" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/CodeforcesProgressTracker$CodeforcesProgressTracker.coverage" NAME="CodeforcesProgressTracker Coverage Results" MODIFIED="1753895694980" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/CodeforcesProgressTracker$scraping.coverage" NAME="scraping Coverage Results" MODIFIED="1753815934425" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
 </project>

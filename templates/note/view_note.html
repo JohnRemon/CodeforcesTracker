@@ -1,0 +1,51 @@
+{% extends 'dashboard/base.html' %}
+
+{% block head %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/notes_dashboard.css') }}">
+{% endblock %}
+{% block body %}
+    <h4>Problem Name: {{ problem.name }}</h4>
+    <h4>Problem Index: {{ problem.index }}</h4>
+    <h4>Problem Tags: {% for tag in problem.tags %}{{ tag }} {% endfor %}</h4>
+    <h4>Problem Rating: {{ problem.rating }}</h4>
+    <h4>Notes</h4>
+    <a href="{{ url_for('create_note', handle=handle, contest_id=problem.contestId, problem_index=problem.index) }}"><i class="fa-solid fa-plus"></i></a>
+    <div class="container">
+        <div class="notes_container">
+            {% for note in notes %}
+                <div class="note_block">
+                    <p>{{ note.content }}</p>
+                    <div class="note_icons">
+                        <a href="{{ url_for('edit_note', handle=handle, contest_id=problem.contestId, problem_index=problem.index, note_id=note.note_id) }}"><i class="fa-solid fa-pencil" style="color: #000000;"></i></a>
+                        <button type="button" class="delete-btn" data-bs-toggle="modal" data-bs-target="#deleteModal{{ note.note_id }}">
+                            <i class="fa-solid fa-trash-can" style="color: #ff0000;"></i>
+                        </button>
+
+                        <div class="modal fade" id="deleteModal{{ note.note_id }}" tabindex="-1" aria-labelledby="deleteModalLabel{{ note.note_id }}" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h1 class="modal-title fs-5" id="deleteModalLabel{{ note.note_id }}">Delete Note</h1>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        Do you really want to delete this note?
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                        <form method="POST" action="{{ url_for('delete_note', handle=handle, contest_id=problem.contestId, problem_index=problem.index, note_id=note.note_id) }}">
+                                            <button type="submit" class="btn btn-danger">Delete</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+        <div class="solution_container">
+            <pre><code>{{ solution.code }}</code></pre>
+        </div>
+    </div>
+{% endblock %}

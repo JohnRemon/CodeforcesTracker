@@ -7,18 +7,24 @@ import openai
 import jwt
 from flask_mail import Message
 
+
 def login_required(f):
     @wraps(f)
     def decorated_function(*args, **kwargs):
         if 'user_id' not in session:
             return redirect(url_for('login'))
         return f(*args, **kwargs)
+
     return decorated_function
+
+
 def send_email(email, token):
     reset_link = url_for('reset_password_with_token', token=token, _external=True)
     msg = Message("Password Reset Request", recipients=[email],
-                    body=f"Click the link to reset your password: {reset_link}")
+                  body=f"Click the link to reset your password: {reset_link}")
     current_app.extensions['mail'].send(msg)
+
+
 def setup_routes(app, db):
     @app.route('/', methods=['GET', 'POST'])
     def index():
@@ -28,7 +34,7 @@ def setup_routes(app, db):
                 return "Invalid Handle", 400
             return redirect(url_for('guest_dashboard', handle=handle))
         else:
-            return render_template('index.html')
+            return render_template('dashboard/index.html')
 
     @app.route('/register', methods=['GET', 'POST'])
     def register():
@@ -51,9 +57,9 @@ def setup_routes(app, db):
                 db.session.commit()
                 session['user_id'] = user.user_id
                 return redirect(url_for('dashboard', handle=handle))
-            return render_template('register.html', error_message=error_message)
+            return render_template('auth/register.html', error_message=error_message)
         else:
-            return render_template('register.html')
+            return render_template('auth/register.html')
 
     @app.route('/login', methods=['GET', 'POST'])
     def login():
@@ -70,10 +76,10 @@ def setup_routes(app, db):
             if error_message is None:
                 session['user_id'] = user.user_id
                 return redirect(url_for('dashboard', handle=user.handle))
-            return render_template('login.html', error_message=error_message)
+            return render_template('auth/login.html', error_message=error_message)
         else:
-            return render_template('login.html')
-        
+            return render_template('auth/login.html')
+
     @app.route('/reset_password', methods=['GET', 'POST'])
     def reset_password():
         if request.method == 'POST':
@@ -93,44 +99,51 @@ def setup_routes(app, db):
                     algorithm='HS256'
                 )
                 send_email(email, token)
-                return render_template('reset_password.html', success_message=success_message)
+                return render_template('auth/reset_password.html', success_message=success_message)
             else:
-                return render_template('reset_password.html', error_message=error_message)
-            
-        return render_template('reset_password.html')
+                return render_template('auth/reset_password.html', error_message=error_message)
+
+        return render_template('auth/reset_password.html')
+
     @app.route('/reset-password/<token>', methods=['GET', 'POST'])
     def reset_password_with_token(token):
         try:
             data = jwt.decode(token, 'secret_key', algorithms=['HS256'])
             email = data['email']
         except jwt.ExpiredSignatureError:
-            return render_template('new_password.html', error_message="Token expired. Please request a new password reset.")
+            return render_template('auth/new_password.html',
+                                   error_message="Token expired. Please request a new password reset.", token=token)
         except jwt.InvalidTokenError:
-            return render_template('new_password.html', error_message="Invalid token. Please request a new password reset.")
+            return render_template('auth/new_password.html',
+                                   error_message="Invalid token. Please request a new password reset.", token=token)
 
+        user = db.session.query(User).filter_by(email=email).first()
         if request.method == 'POST':
-            new_password = request.form.get('new_password')
+            new_password = request.form.get('password')
             confirm_password = request.form.get('confirm_password')
 
             if new_password != confirm_password:
-                return render_template('new_password.html', error_message="Passwords do not match.")
+                return render_template('auth/new_password.html', error_message="Passwords do not match.", token=token)
 
-            user = db.session.query(User).filter_by(email=email).first()
             if user:
-                user.set_password(new_password) 
+                if user.check_password(new_password):
+                    return render_template('auth/new_password.html', error_message="Don't use your old password",
+                                           token=token)
+
+            if user:
+                user.set_password(new_password)
                 db.session.commit()
                 success_message = "Password reset successfully. You can now log in."
-                return render_template('login.html', success_message=success_message)
+                return render_template('auth/login.html', success_message=success_message)
             else:
-                return render_template('new_password.html', error_message="User not found.")
-
-        return render_template('new_password.html')
+                return render_template('auth/new_password.html', error_message="User not found.", token=token)
+        return render_template('auth/new_password.html', token=token)
 
     @app.route('/logout')
     @login_required
     def logout():
         session.pop('user_id', None)
-        return redirect(url_for('index'))
+        return redirect(url_for('dashboard/index'))
 
     def render_dashboard(handle, template, logged_in=False):
         data = get_problem_tags(handle)
@@ -147,7 +160,6 @@ def setup_routes(app, db):
             for sub in submissions:
                 note = Note.query.filter_by(user_id=user.user_id, problem_name=sub['name']).first()
                 notes[sub['name']] = note is not None
-
 
         return render_template(
             template,
@@ -166,11 +178,11 @@ def setup_routes(app, db):
     @app.route('/dashboard/<handle>', methods=['GET', 'POST'])
     @login_required
     def dashboard(handle):
-        return render_dashboard(handle, 'logged_in_dashboard.html', logged_in=True)
+        return render_dashboard(handle, 'dashboard/logged_in_dashboard.html', logged_in=True)
 
     @app.route('/guest_dashboard/<handle>', methods=['GET', 'POST'])
     def guest_dashboard(handle):
-        return render_dashboard(handle, 'dashboard.html', logged_in=False)
+        return render_dashboard(handle, 'auth/dashboard.html', logged_in=False)
 
     @app.route('/dashboard/<handle>/<int:contest_id>/<problem_index>/create_note', methods=['GET', 'POST'])
     @login_required
@@ -179,11 +191,12 @@ def setup_routes(app, db):
         user = db.session.query(User).filter_by(handle=handle).first()
         if request.method == 'POST':
             note = request.form.get('note')
-            db.session.add(Note(user_id=user.user_id, contest_id=contest_id, problem_index=problem_index, problem_name=problem['name'], content=note, timestamp=datetime.now()))
+            db.session.add(Note(user_id=user.user_id, contest_id=contest_id, problem_index=problem_index,
+                                problem_name=problem['name'], content=note, timestamp=datetime.now()))
             db.session.commit()
-            return redirect(url_for('dashboard', handle=handle))
+            return redirect(url_for('view_note', handle=handle, contest_id=contest_id, problem_index=problem_index))
         else:
-            return render_template('add_note.html', handle=handle, problem=problem)
+            return render_template('note/add_note.html', handle=handle, problem=problem)
 
     @app.route('/dashboard/<handle>/<int:contest_id>/<problem_index>/view_note', methods=['GET'])
     @login_required
@@ -192,9 +205,10 @@ def setup_routes(app, db):
         if not user:
             return "User not found", 404
         problem = get_specific_problem_info(handle, contest_id, problem_index)
-        notes = Note.query.filter_by(user_id=user.user_id,contest_id=contest_id,problem_index=problem_index).all()
-        solution = Solution.query.filter_by(user_id=user.user_id, contest_id=contest_id, problem_index=problem_index).first()
-        return render_template('view_note.html', handle=handle, problem=problem, notes=notes, solution=solution)
+        notes = Note.query.filter_by(user_id=user.user_id, contest_id=contest_id, problem_index=problem_index).all()
+        solution = Solution.query.filter_by(user_id=user.user_id, contest_id=contest_id,
+                                            problem_index=problem_index).first()
+        return render_template('note/view_note.html', handle=handle, problem=problem, notes=notes, solution=solution)
 
     @app.route('/dashboard/<handle>/<int:contest_id>/<problem_index>/add_solution', methods=['GET', 'POST'])
     @login_required
@@ -203,35 +217,58 @@ def setup_routes(app, db):
         user = db.session.query(User).filter_by(handle=handle).first()
         if request.method == 'POST':
             code = request.form.get('solution')
-            db.session.add(Solution(user_id=user.user_id, contest_id=contest_id, problem_index=problem_index, problem_name=problem['name'], code=code, timestamp=datetime.now()))
+            db.session.add(Solution(user_id=user.user_id, contest_id=contest_id, problem_index=problem_index,
+                                    problem_name=problem['name'], code=code, timestamp=datetime.now()))
             db.session.commit()
             return redirect(url_for('dashboard', handle=handle))
-        return render_template('add_solution.html', handle=handle, problem=problem)
-    
-    @app.route('/dashboard/<handle>/<int:contest_id>/<problem_index>/ai_review', methods=['GET'])
+        return render_template('note/add_solution.html', handle=handle, problem=problem)
+
+    # @app.route('/dashboard/<handle>/<int:contest_id>/<problem_index>/ai_review', methods=['GET'])
+    # @login_required
+    # def ai_review(handle, contest_id, problem_index):
+    #     problem = get_specific_problem_info(handle, contest_id, problem_index)
+    #     user_code = Solution.query.filter_by(user_id=session['user_id'], contest_id=contest_id, problem_index=problem_index).first()
+    #     prompt = f"""
+    #     Here is a codeforces problem:
+    #     Problem Name: {problem['name']}
+    #     Problem Index: {problem_index}
+    #     Problem Statement: {problem['description']}
+    #     Here is the user's solution:
+    #     {user_code.code if user_code else "No solution submitted yet."}
+    #     Please provide:
+    #     1. An optimal Solution
+    #     2. a comparison between the user's solution and the optimal solution
+    #     3. a review of the user's solution
+    #     4. suggestions for improvement
+    #     """
+    #
+    #     message = openai.ChatCompletion.create(
+    #         model="gpt-4",
+    #         messages=[
+    #             {"role": "user", "content": prompt}
+    #         ]
+    #     )
+    #     response = message['choices'][0]['message']['content']
+    #     return render_template('ai_review.html', handle=handle, problem=problem, response=response)
+
+    @app.route('/dashboard/<handle>/<int:contest_id>/<problem_index>/edit_note/<int:note_id>', methods=['GET', 'POST'])
     @login_required
-    def ai_review(handle, contest_id, problem_index):
-        problem = get_specific_problem_info(handle, contest_id, problem_index)
-        user_code = Solution.query.filter_by(user_id=session['user_id'], contest_id=contest_id, problem_index=problem_index).first()
-        prompt = f"""
-        Here is a codeforces problem:
-        Problem Name: {problem['name']}
-        Problem Index: {problem_index}
-        Problem Statement: {problem['description']}
-        Here is the user's solution:
-        {user_code.code if user_code else "No solution submitted yet."}
-        Please provide:
-        1. An optimal Solution
-        2. a comparison between the user's solution and the optimal solution
-        3. a review of the user's solution
-        4. suggestions for improvement
-        """
-        
-        message = openai.ChatCompletion.create(
-            model="gpt-4",
-            messages=[
-                {"role": "user", "content": prompt}
-            ]
-        )
-        response = message['choices'][0]['message']['content']
-        return render_template('ai_review.html', handle=handle, problem=problem, response=response)
+    def edit_note(handle, contest_id, problem_index, note_id):
+        note = Note.query.get(note_id)
+        if request.method == 'POST':
+            edited_note = request.form.get('edit_note')
+            note.content = edited_note
+            db.session.commit()
+            return redirect(url_for('view_note', handle=handle, contest_id=contest_id, problem_index=problem_index))
+
+        else:
+            return render_template('note/edit_note.html', handle=handle, contest_id=contest_id, problem_index=problem_index, note=note)
+
+    @app.route('/dashboard/<handle>/<int:contest_id>/<problem_index>/delete_note/<int:note_id>', methods=['GET', 'POST'])
+    @login_required
+    def delete_note(handle, contest_id, problem_index, note_id):
+        note = Note.query.get(note_id)
+        if note:
+            db.session.delete(note)
+            db.session.commit()
+        return redirect(url_for('view_note', handle=handle, contest_id=contest_id, problem_index=problem_index))
