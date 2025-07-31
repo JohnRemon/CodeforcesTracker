@@ -6,8 +6,8 @@
 
 {% block body %}
     <form method="POST">
-        <label for="note">Edit Note</label>
-        <textarea rows="20" cols="100" name="edit_note" id="edit_note">{{ note.content }}</textarea>
+        <label for="solution">Edit Solution</label>
+        <textarea rows="20" cols="100" name="edit_solution" id="edit_solution">{{ solution.code }}</textarea>
         <a href="{{ url_for('view_note', handle=handle, contest_id=contest_id, problem_index=problem_index) }}" class="btn btn-secondary">Cancel</a>
         {% if error_message %}
             <div class="alert alert-danger alert-dismissible show" role="alert">

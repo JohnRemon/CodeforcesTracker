@@ -143,7 +143,7 @@ def setup_routes(app, db):
     @login_required
     def logout():
         session.pop('user_id', None)
-        return redirect(url_for('dashboard/index'))
+        return redirect(url_for('index'))
 
     def render_dashboard(handle, template, logged_in=False):
         data = get_problem_tags(handle)
@@ -191,12 +191,14 @@ def setup_routes(app, db):
         user = db.session.query(User).filter_by(handle=handle).first()
         if request.method == 'POST':
             note = request.form.get('note')
+            if not note:
+                return render_template('note/add_note.html', handle=handle, problem=problem, contest_id=contest_id, problem_index=problem_index, note=note, error_message="Please enter a note.")
             db.session.add(Note(user_id=user.user_id, contest_id=contest_id, problem_index=problem_index,
                                 problem_name=problem['name'], content=note, timestamp=datetime.now()))
             db.session.commit()
             return redirect(url_for('view_note', handle=handle, contest_id=contest_id, problem_index=problem_index))
         else:
-            return render_template('note/add_note.html', handle=handle, problem=problem)
+            return render_template('note/add_note.html', handle=handle, problem=problem, contest_id=contest_id, problem_index=problem_index)
 
     @app.route('/dashboard/<handle>/<int:contest_id>/<problem_index>/view_note', methods=['GET'])
     @login_required
@@ -206,9 +208,9 @@ def setup_routes(app, db):
             return "User not found", 404
         problem = get_specific_problem_info(handle, contest_id, problem_index)
         notes = Note.query.filter_by(user_id=user.user_id, contest_id=contest_id, problem_index=problem_index).all()
-        solution = Solution.query.filter_by(user_id=user.user_id, contest_id=contest_id,
-                                            problem_index=problem_index).first()
-        return render_template('note/view_note.html', handle=handle, problem=problem, notes=notes, solution=solution)
+        solutions = Solution.query.filter_by(user_id=user.user_id, contest_id=contest_id,
+                                            problem_index=problem_index).all()
+        return render_template('note/view_note.html', handle=handle, problem=problem, notes=notes, solutions=solutions)
 
     @app.route('/dashboard/<handle>/<int:contest_id>/<problem_index>/add_solution', methods=['GET', 'POST'])
     @login_required
@@ -217,11 +219,13 @@ def setup_routes(app, db):
         user = db.session.query(User).filter_by(handle=handle).first()
         if request.method == 'POST':
             code = request.form.get('solution')
+            if not code:
+                return render_template('note/add_solution.html', handle=handle, problem=problem, contest_id=contest_id, problem_index=problem_index, error_message="Please enter a solution.")
             db.session.add(Solution(user_id=user.user_id, contest_id=contest_id, problem_index=problem_index,
                                     problem_name=problem['name'], code=code, timestamp=datetime.now()))
             db.session.commit()
-            return redirect(url_for('dashboard', handle=handle))
-        return render_template('note/add_solution.html', handle=handle, problem=problem)
+            return redirect(url_for('view_note', handle=handle, contest_id=contest_id, problem_index=problem_index))
+        return render_template('note/add_solution.html', handle=handle, problem=problem, contest_id=contest_id, problem_index=problem_index)
 
     # @app.route('/dashboard/<handle>/<int:contest_id>/<problem_index>/ai_review', methods=['GET'])
     # @login_required
@@ -257,6 +261,9 @@ def setup_routes(app, db):
         note = Note.query.get(note_id)
         if request.method == 'POST':
             edited_note = request.form.get('edit_note')
+            if not edited_note:
+                return render_template('note/edit_note.html', handle=handle, contest_id=contest_id, problem_index=problem_index, note=note, error_message="Please enter a note.")
+
             note.content = edited_note
             db.session.commit()
             return redirect(url_for('view_note', handle=handle, contest_id=contest_id, problem_index=problem_index))
@@ -270,5 +277,28 @@ def setup_routes(app, db):
         note = Note.query.get(note_id)
         if note:
             db.session.delete(note)
+            db.session.commit()
+        return redirect(url_for('view_note', handle=handle, contest_id=contest_id, problem_index=problem_index))
+
+    @app.route('/dashboard/<handle>/<int:contest_id>/<problem_index>/edit_solution/<int:solution_id>', methods=['GET', 'POST'])
+    @login_required
+    def edit_solution(handle, contest_id, problem_index, solution_id):
+        solution = Solution.query.get(solution_id)
+        if request.method == 'POST':
+            edited_solution = request.form.get('edit_solution')
+            if not edited_solution:
+                return render_template('note/edit_solution.html', handle=handle, contest_id=contest_id,
+                                       problem_index=problem_index, solution=solution, error_message="Please enter a solution.")
+            solution.code = edited_solution
+            db.session.commit()
+            return redirect(url_for('view_note', handle=handle, contest_id=contest_id, problem_index=problem_index))
+        return render_template('note/edit_solution.html', handle=handle, contest_id=contest_id, problem_index=problem_index, solution=solution)
+
+    @app.route('/dashboard/<handle>/<int:contest_id>/<problem_index>/delete_solution/<int:solution_id>', methods=['GET', 'POST'])
+    @login_required
+    def delete_solution(handle, contest_id, problem_index, solution_id):
+        solution = Solution.query.get(solution_id)
+        if solution:
+            db.session.delete(solution)
             db.session.commit()
         return redirect(url_for('view_note', handle=handle, contest_id=contest_id, problem_index=problem_index))

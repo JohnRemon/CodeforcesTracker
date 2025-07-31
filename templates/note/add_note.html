@@ -7,7 +7,13 @@
     <form method="POST">
         <label for="note">Add Note</label>
         <textarea rows="10" cols="100" name="note" id="note" placeholder="Enter your notes here ..."></textarea>
-        <a href="{{ url_for('dashboard', handle=handle) }}"><button>Cancel</button></a>
+        <a href="{{ url_for('view_note', handle=handle, contest_id=contest_id, problem_index=problem_index) }}" class="btn btn-secondary">Cancel</a>
+        {% if error_message %}
+            <div class="alert alert-danger alert-dismissible show" role="alert">
+                {{ error_message }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        {% endif %}
         <button type="submit">Save</button>
     </form>
     <h4>Problem Name: {{ problem.name }}</h4>
