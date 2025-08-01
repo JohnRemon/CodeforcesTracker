@@ -4,10 +4,14 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/notes_dashboard.css') }}">
 {% endblock %}
 {% block body %}
-    <h4>{{ problem.name }}</h4>
-
-    <a href="{{ url_for('create_note', handle=handle, contest_id=problem.contestId, problem_index=problem.index) }}"><i class="fa-solid fa-plus"></i></a>
-    <a href="{{ url_for('add_solution', handle=handle, contest_id=problem.contestId, problem_index=problem.index)}}"><i class="fa-solid fa-code"></i></a>
+    <div class="notes_header">
+        <h4>{{ problem.name }}</h4>
+        <div class="header_icons">
+            <a href="{{ url_for('create_note', handle=handle, contest_id=problem.contestId, problem_index=problem.index) }}"><i class="fa-solid fa-plus" style="color: #000000;"></i></a>
+            <a href="{{ url_for('add_solution', handle=handle, contest_id=problem.contestId, problem_index=problem.index)}}"><i class="fa-solid fa-code" style="color: #000000;"></i></a>
+            <a href="{{ url_for('dashboard', handle=handle) }}"><i class="fa-solid fa-home" style="color: #000000;"></i></a>
+        </div>
+    </div>
     <div class="container">
         <div class="notes_container">
             <h4>Notes</h4>

@@ -70,9 +70,10 @@ def get_solved_contest_problems(handle):
     solved_problems = defaultdict(set)
     for submission in submissions:
         if submission['verdict'] == 'OK':
-            contest_id = submission['contestId']
-            problem = submission['problem']
-            solved_problems[contest_id].add(problem['index'])
+            if 'contestId' in submission:
+                contest_id = submission['contestId']
+                problem = submission['problem']
+                solved_problems[contest_id].add(problem['index'])
 
     contest_solved = defaultdict(set)
     for contest in contests:
@@ -87,9 +88,10 @@ def get_unsolved_contest_problems(handle):
     unsolved_problems = defaultdict(set)
     for submission in submissions:
         if submission['verdict'] != 'OK':
-            contest_id = submission['contestId']
-            problem = submission['problem']
-            unsolved_problems[contest_id].add(problem['index'])
+            if 'contestId' in submission:
+                contest_id = submission['contestId']
+                problem = submission['problem']
+                unsolved_problems[contest_id].add(problem['index'])
 
     contest_unsolved = defaultdict(set)
     for contest in contests:

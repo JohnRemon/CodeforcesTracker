@@ -2,6 +2,8 @@
     display: flex;
     width: 100%; 
     margin: 0 auto;
+    justify-content: center;
+    align-items: flex-start;
 }
 
 .notes_container {
@@ -56,3 +58,11 @@
     cursor: pointer;
 }
 
+.notes_header{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 20px auto;
+}

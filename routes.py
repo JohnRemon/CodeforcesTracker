@@ -182,7 +182,7 @@ def setup_routes(app, db):
 
     @app.route('/guest_dashboard/<handle>', methods=['GET', 'POST'])
     def guest_dashboard(handle):
-        return render_dashboard(handle, 'auth/dashboard.html', logged_in=False)
+        return render_dashboard(handle, 'dashboard/dashboard.html', logged_in=False)
 
     @app.route('/dashboard/<handle>/<int:contest_id>/<problem_index>/create_note', methods=['GET', 'POST'])
     @login_required

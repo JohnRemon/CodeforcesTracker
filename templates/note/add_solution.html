@@ -1,20 +1,22 @@
 {% extends 'dashboard/base.html' %}
 
 {% block head %}
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/add_solution.css') }}">
+ <link rel="stylesheet" href="{{ url_for('static', filename='css/edit_note.css') }}">
 {% endblock %}
+
 {% block body %}
-    <h4>Problem Name: {{ problem.name }}</h4>
-    <form method="POST">
-        <label for="note">Add Solution</label>
-        <textarea rows="20" cols="100" name="solution" id="solution" placeholder="Enter your solution here ..."></textarea>
+<form method="POST" class="edit_container">
+    <h4 style="margin: 20px;">Add Solution</h4>
+    <textarea rows="20" cols="100" name="solution" id="solution" class="edit_textarea" placeholder="Please enter your solution..."></textarea>
+    {% if error_message %}
+        <div class="alert alert-danger alert-dismissible show edit_error" role="alert">
+            {{ error_message }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    {% endif %}
+    <div class="edit_buttons">
         <a href="{{ url_for('view_note', handle=handle, contest_id=contest_id, problem_index=problem_index) }}" class="btn btn-secondary">Cancel</a>
-        {% if error_message %}
-            <div class="alert alert-danger alert-dismissible show" role="alert">
-                {{ error_message }}
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-            </div>
-        {% endif %}
-        <button type="submit">Save</button>
-    </form>
+        <button type="submit" class="btn btn-primary">Save</button>
+    </div>
+</form>
 {% endblock %}
